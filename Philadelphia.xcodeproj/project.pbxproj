@@ -42,12 +42,12 @@
 		D8E3FF5518D1FD1D0031089F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D8E3FF5718D1FD1D0031089F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D8E3FF5918D1FD1D0031089F /* Philadelphia-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Philadelphia-Prefix.pch"; sourceTree = "<group>"; };
-		D8E3FF5A18D1FD1D0031089F /* PHAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PHAppDelegate.h; sourceTree = "<group>"; };
-		D8E3FF5B18D1FD1D0031089F /* PHAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PHAppDelegate.m; sourceTree = "<group>"; };
+		D8E3FF5A18D1FD1D0031089F /* PHAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PHAppDelegate.h; path = Sources/PHAppDelegate.h; sourceTree = "<group>"; };
+		D8E3FF5B18D1FD1D0031089F /* PHAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PHAppDelegate.m; path = Sources/PHAppDelegate.m; sourceTree = "<group>"; };
 		D8E3FF5E18D1FD1D0031089F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		D8E3FF6018D1FD1D0031089F /* PHViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PHViewController.h; sourceTree = "<group>"; };
-		D8E3FF6118D1FD1D0031089F /* PHViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PHViewController.m; sourceTree = "<group>"; };
-		D8E3FF6318D1FD1D0031089F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		D8E3FF6018D1FD1D0031089F /* PHViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PHViewController.h; path = Sources/PHViewController.h; sourceTree = "<group>"; };
+		D8E3FF6118D1FD1D0031089F /* PHViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PHViewController.m; path = Sources/PHViewController.m; sourceTree = "<group>"; };
+		D8E3FF6318D1FD1D0031089F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Resources/Images.xcassets; sourceTree = "<group>"; };
 		D8E3FF6918D1FD1D0031089F /* PhiladelphiaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhiladelphiaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8E3FF6A18D1FD1D0031089F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		D8E3FF7218D1FD1D0031089F /* PhiladelphiaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PhiladelphiaTests-Info.plist"; sourceTree = "<group>"; };
@@ -112,13 +112,8 @@
 		D8E3FF5118D1FD1D0031089F /* Philadelphia */ = {
 			isa = PBXGroup;
 			children = (
-				D8E3FF5A18D1FD1D0031089F /* PHAppDelegate.h */,
-				D8E3FF5B18D1FD1D0031089F /* PHAppDelegate.m */,
-				D8E3FF5D18D1FD1D0031089F /* Main.storyboard */,
-				D8E3FF6018D1FD1D0031089F /* PHViewController.h */,
-				D8E3FF6118D1FD1D0031089F /* PHViewController.m */,
-				D8E3FF6318D1FD1D0031089F /* Images.xcassets */,
-				D8E3FF5218D1FD1D0031089F /* Supporting Files */,
+				D8F63BC818D1FEF700BED55E /* Sources */,
+				D8F63BC918D1FF0800BED55E /* Resources */,
 			);
 			path = Philadelphia;
 			sourceTree = "<group>";
@@ -150,6 +145,35 @@
 				D8E3FF7318D1FD1D0031089F /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D8F63BC818D1FEF700BED55E /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				D8E3FF5A18D1FD1D0031089F /* PHAppDelegate.h */,
+				D8E3FF5B18D1FD1D0031089F /* PHAppDelegate.m */,
+				D8E3FF6018D1FD1D0031089F /* PHViewController.h */,
+				D8E3FF6118D1FD1D0031089F /* PHViewController.m */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+		D8F63BC918D1FF0800BED55E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D8F63BCA18D1FF1500BED55E /* Interfaces */,
+				D8E3FF6318D1FD1D0031089F /* Images.xcassets */,
+				D8E3FF5218D1FD1D0031089F /* Supporting Files */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		D8F63BCA18D1FF1500BED55E /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				D8E3FF5D18D1FD1D0031089F /* Main.storyboard */,
+			);
+			name = Interfaces;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,6 +305,7 @@
 				D8E3FF5518D1FD1D0031089F /* en */,
 			);
 			name = InfoPlist.strings;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		D8E3FF5D18D1FD1D0031089F /* Main.storyboard */ = {
@@ -289,6 +314,7 @@
 				D8E3FF5E18D1FD1D0031089F /* Base */,
 			);
 			name = Main.storyboard;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		D8E3FF7318D1FD1D0031089F /* InfoPlist.strings */ = {
@@ -463,6 +489,7 @@
 				D8E3FF7C18D1FD1D0031089F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D8E3FF7D18D1FD1D0031089F /* Build configuration list for PBXNativeTarget "PhiladelphiaTests" */ = {
 			isa = XCConfigurationList;
@@ -471,6 +498,7 @@
 				D8E3FF7F18D1FD1D0031089F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
