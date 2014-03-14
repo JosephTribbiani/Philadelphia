@@ -2,7 +2,7 @@
 //  PHLine.m
 //  Philadelphia
 //
-//  Created by Igor Bogatchuk on 3/13/14.
+//  Created by Igor Bogatchuk on 3/14/14.
 //  Copyright (c) 2014 Igor Bogatchuk. All rights reserved.
 //
 
@@ -17,6 +17,6 @@
 @dynamic lineId;
 @dynamic points;
 @dynamic positions;
-@dynamic route;
+@dynamic routes;
 
 @end

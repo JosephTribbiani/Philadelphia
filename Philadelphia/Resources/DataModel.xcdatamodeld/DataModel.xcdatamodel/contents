@@ -4,7 +4,7 @@
         <attribute name="lineId" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="points" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PHPoint" inverseName="line" inverseEntity="PHPoint" syncable="YES"/>
         <relationship name="positions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PHPosition" inverseName="line" inverseEntity="PHPosition" syncable="YES"/>
-        <relationship name="route" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PHRoute" inverseName="line" inverseEntity="PHRoute" syncable="YES"/>
+        <relationship name="routes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PHRoute" inverseName="line" inverseEntity="PHRoute" syncable="YES"/>
     </entity>
     <entity name="PHPoint" representedClassName="PHPoint" syncable="YES">
         <attribute name="latitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -20,7 +20,7 @@
     <entity name="PHRoute" representedClassName="PHRoute" syncable="YES">
         <attribute name="direction" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="line" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PHLine" inverseName="route" inverseEntity="PHLine" syncable="YES"/>
+        <relationship name="line" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PHLine" inverseName="routes" inverseEntity="PHLine" syncable="YES"/>
         <relationship name="specificRoute" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PHSpecificRoute" inverseName="route" inverseEntity="PHSpecificRoute" syncable="YES"/>
     </entity>
     <entity name="PHSpecificRoute" representedClassName="PHSpecificRoute" syncable="YES">
@@ -40,12 +40,12 @@
         <relationship name="station" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PHStation" inverseName="stops" inverseEntity="PHStation" syncable="YES"/>
     </entity>
     <elements>
-        <element name="PHPoint" positionX="-342" positionY="-108" width="128" height="88"/>
+        <element name="PHPoint" positionX="-326" positionY="-106" width="128" height="88"/>
         <element name="PHLine" positionX="-549" positionY="9" width="128" height="103"/>
         <element name="PHStation" positionX="-549" positionY="135" width="128" height="103"/>
         <element name="PHPosition" positionX="-720" positionY="9" width="128" height="103"/>
         <element name="PHStop" positionX="-236" positionY="153" width="128" height="88"/>
-        <element name="PHRoute" positionX="-344" positionY="23" width="128" height="103"/>
-        <element name="PHSpecificRoute" positionX="-72" positionY="-99" width="128" height="88"/>
+        <element name="PHRoute" positionX="-324" positionY="23" width="128" height="103"/>
+        <element name="PHSpecificRoute" positionX="-162" positionY="20" width="128" height="88"/>
     </elements>
 </model>

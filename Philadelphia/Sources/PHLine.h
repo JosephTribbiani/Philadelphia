@@ -2,7 +2,7 @@
 //  PHLine.h
 //  Philadelphia
 //
-//  Created by Igor Bogatchuk on 3/13/14.
+//  Created by Igor Bogatchuk on 3/14/14.
 //  Copyright (c) 2014 Igor Bogatchuk. All rights reserved.
 //
 
@@ -16,7 +16,7 @@
 @property (nonatomic, retain) NSString * lineId;
 @property (nonatomic, retain) NSSet *points;
 @property (nonatomic, retain) NSSet *positions;
-@property (nonatomic, retain) PHRoute *route;
+@property (nonatomic, retain) NSSet *routes;
 @end
 
 @interface PHLine (CoreDataGeneratedAccessors)
@@ -30,5 +30,10 @@
 - (void)removePositionsObject:(PHPosition *)value;
 - (void)addPositions:(NSSet *)values;
 - (void)removePositions:(NSSet *)values;
+
+- (void)addRoutesObject:(PHRoute *)value;
+- (void)removeRoutesObject:(PHRoute *)value;
+- (void)addRoutes:(NSSet *)values;
+- (void)removeRoutes:(NSSet *)values;
 
 @end

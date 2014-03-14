@@ -2,7 +2,7 @@
 //  PHStation.h
 //  Philadelphia
 //
-//  Created by Igor Bogatchuk on 3/13/14.
+//  Created by Igor Bogatchuk on 3/14/14.
 //  Copyright (c) 2014 Igor Bogatchuk. All rights reserved.
 //
 
@@ -13,8 +13,8 @@
 
 @interface PHStation : NSManagedObject
 
-@property (nonatomic, retain) NSString * stationId;
 @property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSString * stationId;
 @property (nonatomic, retain) NSSet *positions;
 @property (nonatomic, retain) NSSet *stops;
 @end
