@@ -28,6 +28,7 @@
 		D82BAA1718D34D3100CB568C /* PHCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D82BAA1618D34D3100CB568C /* PHCoreDataManager.m */; };
 		D82BAA1918D34F7D00CB568C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D82BAA1818D34F7D00CB568C /* CoreData.framework */; };
 		D8403E6918D859DC00B99DF8 /* PHLine.m in Sources */ = {isa = PBXBuildFile; fileRef = D8403E6818D859DC00B99DF8 /* PHLine.m */; };
+		D8403E6B18D85D1A00B99DF8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8403E6A18D85D1A00B99DF8 /* MapKit.framework */; };
 		D86CD30818D7658E006A2390 /* PHLine+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = D86CD30718D7658E006A2390 /* PHLine+Create.m */; };
 		D8E3FF4C18D1FD1D0031089F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8E3FF4B18D1FD1D0031089F /* Foundation.framework */; };
 		D8E3FF4E18D1FD1D0031089F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8E3FF4D18D1FD1D0031089F /* CoreGraphics.framework */; };
@@ -36,7 +37,7 @@
 		D8E3FF5818D1FD1D0031089F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E3FF5718D1FD1D0031089F /* main.m */; };
 		D8E3FF5C18D1FD1D0031089F /* PHAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E3FF5B18D1FD1D0031089F /* PHAppDelegate.m */; };
 		D8E3FF5F18D1FD1D0031089F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8E3FF5D18D1FD1D0031089F /* Main.storyboard */; };
-		D8E3FF6218D1FD1D0031089F /* PHViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E3FF6118D1FD1D0031089F /* PHViewController.m */; };
+		D8E3FF6218D1FD1D0031089F /* PHMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E3FF6118D1FD1D0031089F /* PHMainController.m */; };
 		D8E3FF6418D1FD1D0031089F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8E3FF6318D1FD1D0031089F /* Images.xcassets */; };
 		D8E3FF6B18D1FD1D0031089F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8E3FF6A18D1FD1D0031089F /* XCTest.framework */; };
 		D8E3FF6C18D1FD1D0031089F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8E3FF4B18D1FD1D0031089F /* Foundation.framework */; };
@@ -100,6 +101,7 @@
 		D82BAA1818D34F7D00CB568C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		D8403E6718D859DC00B99DF8 /* PHLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHLine.h; path = Sources/PHLine.h; sourceTree = "<group>"; };
 		D8403E6818D859DC00B99DF8 /* PHLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHLine.m; path = Sources/PHLine.m; sourceTree = "<group>"; };
+		D8403E6A18D85D1A00B99DF8 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		D86CD30618D7658E006A2390 /* PHLine+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PHLine+Create.h"; path = "Sources/PHLine+Create.h"; sourceTree = "<group>"; };
 		D86CD30718D7658E006A2390 /* PHLine+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "PHLine+Create.m"; path = "Sources/PHLine+Create.m"; sourceTree = "<group>"; };
 		D8E3FF4818D1FD1D0031089F /* Philadelphia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Philadelphia.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,8 +115,8 @@
 		D8E3FF5A18D1FD1D0031089F /* PHAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PHAppDelegate.h; path = Sources/PHAppDelegate.h; sourceTree = "<group>"; };
 		D8E3FF5B18D1FD1D0031089F /* PHAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PHAppDelegate.m; path = Sources/PHAppDelegate.m; sourceTree = "<group>"; };
 		D8E3FF5E18D1FD1D0031089F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		D8E3FF6018D1FD1D0031089F /* PHViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PHViewController.h; path = Sources/PHViewController.h; sourceTree = "<group>"; };
-		D8E3FF6118D1FD1D0031089F /* PHViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PHViewController.m; path = Sources/PHViewController.m; sourceTree = "<group>"; };
+		D8E3FF6018D1FD1D0031089F /* PHMainController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PHMainController.h; path = Sources/PHMainController.h; sourceTree = "<group>"; };
+		D8E3FF6118D1FD1D0031089F /* PHMainController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PHMainController.m; path = Sources/PHMainController.m; sourceTree = "<group>"; };
 		D8E3FF6318D1FD1D0031089F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Resources/Images.xcassets; sourceTree = "<group>"; };
 		D8E3FF6918D1FD1D0031089F /* PhiladelphiaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhiladelphiaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8E3FF6A18D1FD1D0031089F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -129,6 +131,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8403E6B18D85D1A00B99DF8 /* MapKit.framework in Frameworks */,
 				D82BAA1918D34F7D00CB568C /* CoreData.framework in Frameworks */,
 				D8E3FF4E18D1FD1D0031089F /* CoreGraphics.framework in Frameworks */,
 				D8E3FF5018D1FD1D0031089F /* UIKit.framework in Frameworks */,
@@ -234,6 +237,7 @@
 		D8E3FF4A18D1FD1D0031089F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D8403E6A18D85D1A00B99DF8 /* MapKit.framework */,
 				D82BAA1818D34F7D00CB568C /* CoreData.framework */,
 				D8E3FF4B18D1FD1D0031089F /* Foundation.framework */,
 				D8E3FF4D18D1FD1D0031089F /* CoreGraphics.framework */,
@@ -318,9 +322,9 @@
 			children = (
 				D86CD30618D7658E006A2390 /* PHLine+Create.h */,
 				D86CD30718D7658E006A2390 /* PHLine+Create.m */,
-				D8F63BCB18D1FF8100BED55E /* DataModel.xcdatamodeld */,
 				D8403E6718D859DC00B99DF8 /* PHLine.h */,
 				D8403E6818D859DC00B99DF8 /* PHLine.m */,
+				D8F63BCB18D1FF8100BED55E /* DataModel.xcdatamodeld */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -328,8 +332,8 @@
 		D8F63BE418D20D1600BED55E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				D8E3FF6018D1FD1D0031089F /* PHViewController.h */,
-				D8E3FF6118D1FD1D0031089F /* PHViewController.m */,
+				D8E3FF6018D1FD1D0031089F /* PHMainController.h */,
+				D8E3FF6118D1FD1D0031089F /* PHMainController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -450,7 +454,7 @@
 				D82BA9F418D3188000CB568C /* AFURLRequestSerialization.m in Sources */,
 				D8F63BCD18D1FF8100BED55E /* DataModel.xcdatamodeld in Sources */,
 				D82BA9F518D3188000CB568C /* AFURLResponseSerialization.m in Sources */,
-				D8E3FF6218D1FD1D0031089F /* PHViewController.m in Sources */,
+				D8E3FF6218D1FD1D0031089F /* PHMainController.m in Sources */,
 				D82BA9F818D3188000CB568C /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				D82BA9FD18D3188000CB568C /* UIRefreshControl+AFNetworking.m in Sources */,
 				D82BA9FC18D3188000CB568C /* UIProgressView+AFNetworking.m in Sources */,

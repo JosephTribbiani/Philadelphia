@@ -6,18 +6,20 @@
 //  Copyright (c) 2014 Igor Bogatchuk. All rights reserved.
 //
 
-#import "PHViewController.h"
+#import "PHMainController.h"
+#import <MapKit/MapKit.h>
 
-@interface PHViewController ()
+@interface PHMainController () <MKMapViewDelegate>
+
+@property (weak, nonatomic) IBOutlet MKMapView* mapView;
 
 @end
 
-@implementation PHViewController
+@implementation PHMainController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
 }
 
 - (void)didReceiveMemoryWarning
