@@ -7,13 +7,21 @@
 //
 
 #import "PHCoreDataManager.h"
+#import "PHNetworkingManager.h"
+#import "PHLine+Create.h"
+
+@interface PHCoreDataManager()
+
+@property (nonatomic, strong) PHNetworkingManager* networkingManager;
+
+@end
 
 @implementation PHCoreDataManager
 
 - (void)saveContext
 {
-    NSError *error = nil;
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
+    NSError* error = nil;
+    NSManagedObjectContext* managedObjectContext = self.managedObjectContext;
     if (managedObjectContext != nil) {
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error])
         {
@@ -25,14 +33,14 @@
 
 #pragma mark - Core Data stack
 
-- (NSManagedObjectContext *)managedObjectContext
+- (NSManagedObjectContext*)managedObjectContext
 {
     if (_managedObjectContext != nil)
     {
         return _managedObjectContext;
     }
     
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+    NSPersistentStoreCoordinator* coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil)
     {
         _managedObjectContext = [[NSManagedObjectContext alloc] init];
@@ -41,27 +49,25 @@
     return _managedObjectContext;
 }
 
-- (NSManagedObjectModel *)managedObjectModel
+- (NSManagedObjectModel*)managedObjectModel
 {
-    if (_managedObjectModel != nil)
+    if (_managedObjectModel == nil)
     {
-        return _managedObjectModel;
+        _managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
     }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"DataStore" withExtension:@"momd"];
-    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return _managedObjectModel;
 }
 
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
+- (NSPersistentStoreCoordinator*)persistentStoreCoordinator
 {
     if (_persistentStoreCoordinator != nil)
     {
         return _persistentStoreCoordinator;
     }
     
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"DataStore.sqlite"];
+    NSURL* storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"DataStore.sqlite"];
     
-    NSError *error = nil;
+    NSError* error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error])
     {
@@ -96,10 +102,36 @@
 
 #pragma mark - Application's Documents directory
 
-- (NSURL *)applicationDocumentsDirectory
+- (NSURL*)applicationDocumentsDirectory
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
+#pragma mark -
+
+- (PHNetworkingManager *)networkingManager
+{
+    if (_networkingManager == nil)
+    {
+        _networkingManager = [PHNetworkingManager new];
+    }
+    return _networkingManager;
+}
+
+- (void)loadTrainMap
+{
+    [self.networkingManager requestTransportInfoWithCompletionHandler:^(NSDictionary *transportInfo)
+    {
+        for (NSDictionary* line in transportInfo[@"lines"])
+        {
+            [PHLine lineWithInfo:line inManagedObjectContext:self.managedObjectContext];
+        }
+        if ([self.managedObjectContext hasChanges])
+        {
+            [self.managedObjectContext save:NULL];
+        }
+       
+    }];
+}
 
 @end

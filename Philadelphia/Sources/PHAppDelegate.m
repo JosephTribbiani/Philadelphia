@@ -7,12 +7,15 @@
 //
 
 #import "PHAppDelegate.h"
+#import "PHCoreDataManager.h"
 
 @implementation PHAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    self.coreDataManger = [PHCoreDataManager new];
+    [self.coreDataManger loadTrainMap];
+    
     return YES;
 }
 							

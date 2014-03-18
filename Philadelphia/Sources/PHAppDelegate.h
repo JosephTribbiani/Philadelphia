@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PHCoreDataManager.h"
 
 @interface PHAppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) UIWindow* window;
+@property (strong, nonatomic) PHCoreDataManager* coreDataManger;
 
 @end

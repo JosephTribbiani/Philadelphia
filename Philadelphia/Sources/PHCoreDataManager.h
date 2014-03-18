@@ -16,5 +16,6 @@
 @property (nonatomic, strong) NSPersistentStoreCoordinator* persistentStoreCoordinator;
 
 - (void)saveContext;
+- (void)loadTrainMap;
 
 @end

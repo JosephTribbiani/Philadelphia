@@ -7,7 +7,6 @@
 //
 
 #import "PHViewController.h"
-#import "PHNetworkingManager.h"
 
 @interface PHViewController ()
 
@@ -19,9 +18,6 @@
 {
     [super viewDidLoad];
     
-    PHNetworkingManager* manager = [PHNetworkingManager new];
-    NSDictionary* result = [manager getJSON];
-    NSLog(@"%@",result);
 }
 
 - (void)didReceiveMemoryWarning
