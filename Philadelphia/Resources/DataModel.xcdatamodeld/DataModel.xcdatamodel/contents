@@ -3,8 +3,17 @@
     <entity name="PHLine" representedClassName="PHLine" syncable="YES">
         <attribute name="lineId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shapes" optional="YES" attributeType="Binary" syncable="YES"/>
+        <relationship name="stations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PHStation" inverseName="lines" inverseEntity="PHStation" syncable="YES"/>
+    </entity>
+    <entity name="PHStation" representedClassName="PHStation" syncable="YES">
+        <attribute name="latitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stopId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="lines" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PHLine" inverseName="stations" inverseEntity="PHLine" syncable="YES"/>
     </entity>
     <elements>
-        <element name="PHLine" positionX="-549" positionY="9" width="128" height="118"/>
+        <element name="PHLine" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="PHStation" positionX="0" positionY="0" width="0" height="0"/>
     </elements>
 </model>

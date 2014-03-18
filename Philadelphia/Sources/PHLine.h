@@ -9,10 +9,20 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class PHStation;
 
 @interface PHLine : NSManagedObject
 
 @property (nonatomic, retain) NSString * lineId;
 @property (nonatomic, retain) NSData * shapes;
+@property (nonatomic, retain) NSSet *stations;
+@end
+
+@interface PHLine (CoreDataGeneratedAccessors)
+
+- (void)addStationsObject:(PHStation *)value;
+- (void)removeStationsObject:(PHStation *)value;
+- (void)addStations:(NSSet *)values;
+- (void)removeStations:(NSSet *)values;
 
 @end

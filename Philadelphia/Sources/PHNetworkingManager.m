@@ -41,6 +41,7 @@
         if (completionHandler)
         {
             NSMutableArray* linesMutable = [NSMutableArray new];
+            NSMutableArray* stopsMutable = [NSMutableArray new];
             
             // line views
             NSArray* lines = responseObject[@"lineViews"];
@@ -52,7 +53,25 @@
                                           @"lineId" : lineId}];
             }
             
-            completionHandler(@{@"lines" : [NSArray arrayWithArray:linesMutable]});
+            // stop views
+            NSArray* stopes = responseObject[@"stopViews"];
+            for (NSDictionary* stop in stopes)
+            {
+                NSMutableArray* lineIds = [NSMutableArray new];
+                NSArray* positions = stop[@"positions"];
+                for (NSArray* position in positions)
+                {
+                    [lineIds addObject:position[0]];
+                }
+                [stopsMutable addObject:@{@"stopId" : [NSString stringWithFormat:@"%@", stop[@"stopId"]] ,
+                                          @"name" : stop[@"name"],
+                                          @"latitude" : stop[@"lat"],
+                                          @"longitude" : stop[@"lon"],
+                                          @"lines" : lineIds}];
+            }
+            
+            completionHandler(@{@"lines" : [NSArray arrayWithArray:linesMutable],
+                                @"stops" : [NSArray arrayWithArray:stopsMutable]});
         }
     }
     failure:^(AFHTTPRequestOperation* operation, NSError* error)

@@ -9,6 +9,7 @@
 #import "PHCoreDataManager.h"
 #import "PHNetworkingManager.h"
 #import "PHLine+Create.h"
+#import "PHStation+Create.h"
 
 @interface PHCoreDataManager()
 
@@ -125,6 +126,11 @@
         for (NSDictionary* line in transportInfo[@"lines"])
         {
             [PHLine lineWithInfo:line inManagedObjectContext:self.managedObjectContext];
+        }
+        
+        for (NSDictionary* stop in transportInfo[@"stops"])
+        {
+            [PHStation stationWithInfo:stop inManagedObjectContext:self.managedObjectContext];
         }
         if ([self.managedObjectContext hasChanges])
         {
