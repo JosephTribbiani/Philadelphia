@@ -49,8 +49,10 @@
             {
                 NSData* shapes = [NSJSONSerialization dataWithJSONObject:line[@"shape"] options:0 error:NULL];
                 NSString* lineId = line[@"lineId"];
-                [linesMutable addObject:@{@"shapes" : shapes,
-                                          @"lineId" : lineId}];
+                NSMutableDictionary* mutableLine = [NSMutableDictionary dictionaryWithDictionary:@{@"shapes" : shapes,
+                                                                                                   @"lineId" : lineId,
+                                                                                                   @"crosses" : [NSMutableArray new]}]; //placeholder for crosses
+                [linesMutable addObject:mutableLine];
             }
             
             // stop views
@@ -63,13 +65,34 @@
                 {
                     [lineIds addObject:position[0]];
                 }
+                
+                // calculate crosses
+                ////////////////////////////////////////////////////////////////////////////////////////////////
+                NSMutableSet* crossedLines = [NSMutableSet setWithArray:lineIds]; //remove duplicates from array
+                
+                if ([crossedLines count] > 1) // not only itself
+                {
+                    for (NSMutableDictionary* line in linesMutable)
+                    {
+                        if ([crossedLines containsObject:line[@"lineId"]])
+                        {
+                            NSMutableSet* crossedLinesCopy = [crossedLines mutableCopy];
+                            [crossedLinesCopy removeObject:line[@"lineId"]];
+                            NSMutableDictionary* crossStation = [NSMutableDictionary dictionaryWithDictionary:@{[NSString stringWithFormat:@"%@", stop[@"stopId"]] : [crossedLinesCopy allObjects]}];
+                            NSMutableArray* crosses = [line objectForKey:@"crosses"];
+                            [crosses addObject:crossStation];
+                        }
+                    }
+                }
+                ////////////////////////////////////////////////////////////////////////////////////////////////
+                
                 [stopsMutable addObject:@{@"stopId" : [NSString stringWithFormat:@"%@", stop[@"stopId"]] ,
                                           @"name" : stop[@"name"],
                                           @"latitude" : stop[@"lat"],
                                           @"longitude" : stop[@"lon"],
                                           @"lines" : lineIds}];
             }
-            
+
             completionHandler(@{@"lines" : [NSArray arrayWithArray:linesMutable],
                                 @"stops" : [NSArray arrayWithArray:stopsMutable]});
         }
