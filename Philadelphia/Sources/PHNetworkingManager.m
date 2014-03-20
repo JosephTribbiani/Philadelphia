@@ -85,16 +85,54 @@
                     }
                 }
                 ////////////////////////////////////////////////////////////////////////////////////////////////
-                
-                [stopsMutable addObject:@{@"stopId" : [NSString stringWithFormat:@"%@", stop[@"stopId"]] ,
-                                          @"name" : stop[@"name"],
-                                          @"latitude" : stop[@"lat"],
-                                          @"longitude" : stop[@"lon"],
-                                          @"lines" : lineIds}];
+                NSMutableDictionary* mutableStop = [NSMutableDictionary dictionaryWithDictionary:@{@"stopId" : [NSString stringWithFormat:@"%@", stop[@"stopId"]] ,
+                                                                                                   @"name" : stop[@"name"],
+                                                                                                   @"latitude" : stop[@"lat"],
+                                                                                                   @"longitude" : stop[@"lon"],
+                                                                                                   @"lines" : lineIds,
+                                                                                                   @"trains" : [NSMutableArray new]}]; // trains placeholder
+                [stopsMutable addObject:mutableStop];
+            }
+            
+            // roureViews
+            NSArray* routes = responseObject[@"virtualRouteViews"];
+            NSMutableArray* trains = [NSMutableArray new];
+            for (NSDictionary* route in routes)
+            {
+                NSArray* specificRoutes = route[@"specificRoutes"];
+                for (NSDictionary* specificRoute in specificRoutes)
+                {
+                    NSMutableDictionary* train = [NSMutableDictionary new];
+                    [train setObject:specificRoute[@"signature"] forKey:@"signature"];
+                    
+                    NSArray* schedules = specificRoute[@"schedules"];
+                    NSMutableArray* trainSchedule = [NSMutableArray new];
+                    for (NSDictionary* schedule in schedules)
+                    {
+                        NSMutableDictionary* timeStationTable = [NSMutableDictionary new];
+                        NSArray* launches = schedule[@"launches"];
+                        for (NSNumber* launch in launches)
+                        {
+                            NSMutableArray *patterns = [NSMutableArray arrayWithArray:specificRoute[@"pattern"]];
+                            [patterns enumerateObjectsUsingBlock:^(NSArray* patternItem, NSUInteger idx, BOOL *stop)
+                            {
+                                NSInteger stopTime = [patternItem[0] integerValue] + [launch integerValue];
+                                NSString* stopId = [patternItem[1] stringValue];
+                                [timeStationTable setObject:@(stopTime) forKey:stopId];
+                            }];
+                        }
+                        [trainSchedule addObject:@{@"days" : schedule[@"days"],
+                                                   @"schedule" : timeStationTable}];
+                    }
+                    [train setObject:trainSchedule forKey:@"trainSchedule"];
+//                    [train setObject:trainSchedule forKey:specificRoute[@"signature"]];
+                    [trains addObject:train];
+                }
             }
 
             completionHandler(@{@"lines" : [NSArray arrayWithArray:linesMutable],
-                                @"stops" : [NSArray arrayWithArray:stopsMutable]});
+                                @"stops" : [NSArray arrayWithArray:stopsMutable],
+                                @"trains" : trains});
         }
     }
     failure:^(AFHTTPRequestOperation* operation, NSError* error)

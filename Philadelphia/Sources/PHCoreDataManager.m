@@ -130,7 +130,7 @@
         
         for (NSDictionary* stop in transportInfo[@"stops"])
         {
-            [PHStation stationWithInfo:stop inManagedObjectContext:self.managedObjectContext];
+            [PHStation stationWithInfo:stop trains:transportInfo[@"trains"] inManagedObjectContext:self.managedObjectContext];
         }
         if ([self.managedObjectContext hasChanges])
         {

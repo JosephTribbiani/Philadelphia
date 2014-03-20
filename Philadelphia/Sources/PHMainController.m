@@ -115,16 +115,25 @@
     
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     NSFetchRequest* stationRequest = [NSFetchRequest fetchRequestWithEntityName:@"PHStation"];
-    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"stopId = 90502"];
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"stopId = 90208"];
     stationRequest.predicate = predicate;
     PHStation* startStation = [[self.coreDataManager.managedObjectContext executeFetchRequest:stationRequest error:NULL] lastObject];
     NSSet* startlines = startStation.lines;
+    NSSet* trains = startStation.trains;
     
-    stationRequest.predicate = [NSPredicate predicateWithFormat:@"stopId = 90703"];
+    
+    stationRequest.predicate = [NSPredicate predicateWithFormat:@"stopId = 90208"];
     PHStation* endStation = [[self.coreDataManager.managedObjectContext executeFetchRequest:stationRequest error:NULL] lastObject];
     NSSet* endLines = endStation.lines;
-    
+    NSMutableSet* endStationIds = [NSMutableSet new];
+    for (PHLine* line in endLines)
+    {
+        [endStationIds addObject:line.lineId];
+    }
 
+    
+    NSMutableSet* pathes = [NSMutableSet new];
+    
     if ([startlines intersectsSet:endLines])
     {
         // ont the same line
@@ -132,62 +141,19 @@
     }
     else
     {
-        for (PHLine* startLine in startStation.lines)
+        for (PHLine* line in startStation.lines)
         {
-            [self bla:startLine station:endStation];
-        }
-        
-//        NSFetchRequest* lineRequest = [NSFetchRequest fetchRequestWithEntityName:@"PHLine"];
-//        lineRequest.predicate = [NSPredicate predicateWithFormat:@"lineId = 'TRE'"];
-//        PHLine* line1 = [[self.coreDataManager.managedObjectContext executeFetchRequest:lineRequest error:NULL] lastObject];
-//        lineRequest.predicate = [NSPredicate predicateWithFormat:@"lineId = 'NOR'"];
-//        PHLine* line2 = [[self.coreDataManager.managedObjectContext executeFetchRequest:lineRequest error:NULL] lastObject];
-//        NSArray* intersections = [self line:line1 intersectsLine:line2];
-    }
-
-    
-    
-}
-
-- (NSArray*)line:(PHLine*)line1 intersectsLine:(PHLine*)line2
-{
-    NSMutableArray* mutableResult = [NSMutableArray new];
-    NSArray* line1Crosses = [NSJSONSerialization JSONObjectWithData:line1.crosses options:0 error:NULL];
-    for (NSDictionary* cross in line1Crosses)
-    {
-        for (NSString* crossLineId in [[cross allValues] lastObject])
-        {
-            if ([crossLineId isEqualToString:line2.lineId])
+            NSArray* crossLines = [NSJSONSerialization JSONObjectWithData:line.crosses options:0 error:NULL];
+            for (NSDictionary* cross in crossLines)
             {
-                NSLog(@"got intersection");
-                [mutableResult addObject:[[cross allKeys] lastObject]];
+                NSSet* crossLinesIds = [NSSet setWithArray:[[cross allValues] lastObject]];
+                if ([crossLinesIds intersectsSet:endStationIds])
+                {
+                    [pathes addObject:[[cross allKeys] lastObject]];
+                }
             }
         }
-    }
-    return [mutableResult count] == 0 ? nil : [NSArray arrayWithArray:mutableResult];
-}
-
-- (void)bla:(PHLine*)line station:(PHStation*)station
-{
-    NSSet* stations = line.stations;
-    if ([stations containsObject:station])
-    {
-        NSLog(@"done");
-    }
-    else
-    {
-        NSArray* lineCrosses = [NSJSONSerialization JSONObjectWithData:line.crosses options:0 error:NULL];
-        for (NSDictionary* cross in lineCrosses)
-        {
-            for (NSString* crossLineId in [[cross allValues] lastObject])
-            {
-                NSLog(@"%@",[[cross allKeys] lastObject]);
-                NSFetchRequest* lineRequest = [NSFetchRequest fetchRequestWithEntityName:@"PHLine"];
-                lineRequest.predicate = [NSPredicate predicateWithFormat:@"lineId = %@",crossLineId];
-                PHLine* newLine = [[self.coreDataManager.managedObjectContext executeFetchRequest:lineRequest error:NULL] lastObject];
-                [self bla:newLine station:station];
-            }
-        }
+        NSLog(@"pathes: %@",pathes);
     }
 }
 

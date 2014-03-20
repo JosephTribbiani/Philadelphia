@@ -1,5 +1,5 @@
 //
-//  PHLine.h
+//  PHTrain.h
 //  Philadelphia
 //
 //  Created by Igor Bogatchuk on 3/20/14.
@@ -11,15 +11,14 @@
 
 @class PHStation;
 
-@interface PHLine : NSManagedObject
+@interface PHTrain : NSManagedObject
 
-@property (nonatomic, retain) NSData * crosses;
-@property (nonatomic, retain) NSString * lineId;
-@property (nonatomic, retain) NSData * shapes;
+@property (nonatomic, retain) NSString * signature;
+@property (nonatomic, retain) NSData * schedule;
 @property (nonatomic, retain) NSSet *stations;
 @end
 
-@interface PHLine (CoreDataGeneratedAccessors)
+@interface PHTrain (CoreDataGeneratedAccessors)
 
 - (void)addStationsObject:(PHStation *)value;
 - (void)removeStationsObject:(PHStation *)value;

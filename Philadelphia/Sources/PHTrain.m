@@ -1,20 +1,19 @@
 //
-//  PHLine.m
+//  PHTrain.m
 //  Philadelphia
 //
 //  Created by Igor Bogatchuk on 3/20/14.
 //  Copyright (c) 2014 Igor Bogatchuk. All rights reserved.
 //
 
-#import "PHLine.h"
+#import "PHTrain.h"
 #import "PHStation.h"
 
 
-@implementation PHLine
+@implementation PHTrain
 
-@dynamic crosses;
-@dynamic lineId;
-@dynamic shapes;
+@dynamic signature;
+@dynamic schedule;
 @dynamic stations;
 
 @end

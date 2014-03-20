@@ -10,6 +10,6 @@
 
 @interface PHStation (Create)
 
-+ (PHStation*)stationWithInfo:(NSDictionary*)info inManagedObjectContext:(NSManagedObjectContext*)context;
++ (PHStation*)stationWithInfo:(NSDictionary*)info trains:(NSArray*)trains inManagedObjectContext:(NSManagedObjectContext*)context;
 
 @end

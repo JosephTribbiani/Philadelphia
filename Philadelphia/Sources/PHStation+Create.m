@@ -8,10 +8,11 @@
 
 #import "PHStation+Create.h"
 #import "PHLine+Create.h"
+#import "PHTrain+Create.h"
 
 @implementation PHStation (Create)
 
-+ (PHStation*)stationWithInfo:(NSDictionary*)info inManagedObjectContext:(NSManagedObjectContext*)context
++ (PHStation*)stationWithInfo:(NSDictionary*)info trains:(NSArray*)trainsInfo inManagedObjectContext:(NSManagedObjectContext*)context;
 {
     PHStation* station = nil;
     NSFetchRequest* request = [NSFetchRequest fetchRequestWithEntityName:@"PHStation"];
@@ -31,8 +32,8 @@
         station.latitude = info[@"latitude"];
         station.longitude = info[@"longitude"];
         
+        // setting lines
         NSMutableSet* lines = [station mutableSetValueForKey:@"lines"];
-        
         for (NSString* lineId in info[@"lines"])
         {
             NSFetchRequest* lineRequest = [NSFetchRequest fetchRequestWithEntityName:@"PHLine"];
@@ -51,7 +52,38 @@
             {
                 // another error
             }
-            
+        }
+        
+        //settings trains
+        NSMutableSet* trains = [station mutableSetValueForKey:@"trains"];
+        for (NSDictionary* train in trainsInfo)
+        {
+            for (NSDictionary* trainSchedule in train[@"trainSchedule"])
+            {
+                NSArray* stopIds = [[trainSchedule objectForKey:@"schedule"] allKeys];
+                NSString* stopId = station.stopId;
+                
+                if ([stopIds containsObject:stopId])
+                {
+                    NSFetchRequest* lineRequest = [NSFetchRequest fetchRequestWithEntityName:@"PHTrain"];
+                    lineRequest.predicate = [NSPredicate predicateWithFormat:@"signature = %@",train[@"signature"]];
+                    NSError* error = nil;
+                    NSArray* matches = [context executeFetchRequest:lineRequest error:&error];
+                    if ([matches count] == 0)
+                    {
+                        PHTrain* newTrain = [PHTrain trainWithInfo:train inManagedObjectContext:context];
+                        [trains addObject:newTrain];
+                    }
+                    else if ([matches count] == 1)
+                    {
+                        [trains addObject:[matches firstObject]];
+                    }
+                    else
+                    {
+                        // another error
+                    }
+                }
+            }
         }
     }
     return station;
