@@ -161,11 +161,11 @@
 - (void)calculations
 {
     NSFetchRequest* startRequest = [NSFetchRequest fetchRequestWithEntityName:@"PHStation"];
-    startRequest.predicate = [NSPredicate predicateWithFormat:@"stopId = 1281"];
+    startRequest.predicate = [NSPredicate predicateWithFormat:@"stopId = 1284"];
     PHStation* startStation = [[self.coreDataManager.managedObjectContext executeFetchRequest:startRequest error:NULL] lastObject];
 
     NSFetchRequest* stopRequest = [NSFetchRequest fetchRequestWithEntityName:@"PHStation"];
-    stopRequest.predicate = [NSPredicate predicateWithFormat:@"stopId = 1284"];
+    stopRequest.predicate = [NSPredicate predicateWithFormat:@"stopId = 1281"];
     PHStation* stopStation = [[self.coreDataManager.managedObjectContext executeFetchRequest:stopRequest error:NULL] lastObject];
     
     NSSet* startStationTrains = startStation.trains;
@@ -189,7 +189,7 @@
                 NSArray* startTimes = [schedule[@"schedule"] objectForKey:startStation.stopId];
                 NSArray* endTimes = [schedule[@"schedule"] objectForKey:stopStation.stopId];
                 NSLog(@"train: %@",train.signature);
-                NSTimeInterval currentTime = 17090;//[self currentTimeIntervalSinceMidnight];
+                NSTimeInterval currentTime = [self currentTimeIntervalSinceMidnight];
                 NSUInteger index = 0;
                 for (NSNumber* time in startTimes)
                 {
