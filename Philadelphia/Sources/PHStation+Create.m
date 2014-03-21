@@ -31,6 +31,7 @@
         station.name = info[@"name"];
         station.latitude = info[@"latitude"];
         station.longitude = info[@"longitude"];
+        station.positions = [NSJSONSerialization dataWithJSONObject:info[@"positions"] options:0 error:NULL];
         
         // setting lines
         NSMutableSet* lines = [station mutableSetValueForKey:@"lines"];
@@ -53,7 +54,7 @@
                 // another error
             }
         }
-        
+        NSString* stopId = station.stopId;
         //settings trains
         NSMutableSet* trains = [station mutableSetValueForKey:@"trains"];
         for (NSDictionary* train in trainsInfo)
@@ -61,26 +62,27 @@
             for (NSDictionary* trainSchedule in train[@"trainSchedule"])
             {
                 NSArray* stopIds = [[trainSchedule objectForKey:@"schedule"] allKeys];
-                NSString* stopId = station.stopId;
-                
-                if ([stopIds containsObject:stopId])
+                for (NSString* theStopId in stopIds)
                 {
-                    NSFetchRequest* lineRequest = [NSFetchRequest fetchRequestWithEntityName:@"PHTrain"];
-                    lineRequest.predicate = [NSPredicate predicateWithFormat:@"signature = %@",train[@"signature"]];
-                    NSError* error = nil;
-                    NSArray* matches = [context executeFetchRequest:lineRequest error:&error];
-                    if ([matches count] == 0)
+                    if ([theStopId isEqualToString:stopId])
                     {
-                        PHTrain* newTrain = [PHTrain trainWithInfo:train inManagedObjectContext:context];
-                        [trains addObject:newTrain];
-                    }
-                    else if ([matches count] == 1)
-                    {
-                        [trains addObject:[matches firstObject]];
-                    }
-                    else
-                    {
-                        // another error
+                        NSFetchRequest* lineRequest = [NSFetchRequest fetchRequestWithEntityName:@"PHTrain"];
+                        lineRequest.predicate = [NSPredicate predicateWithFormat:@"signature = %@",train[@"signature"]];
+                        NSError* error = nil;
+                        NSArray* matches = [context executeFetchRequest:lineRequest error:&error];
+                        if ([matches count] == 0)
+                        {
+                            PHTrain* newTrain = [PHTrain trainWithInfo:train inManagedObjectContext:context];
+                            [trains addObject:newTrain];
+                        }
+                        else if ([matches count] == 1)
+                        {
+                            [trains addObject:[matches firstObject]];
+                        }
+                        else
+                        {
+                            // another error
+                        }
                     }
                 }
             }

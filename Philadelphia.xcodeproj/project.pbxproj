@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		D815142B18DB50DA0052FCC7 /* PHTrain.m in Sources */ = {isa = PBXBuildFile; fileRef = D815142A18DB50DA0052FCC7 /* PHTrain.m */; };
-		D815142E18DB50DA0052FCC7 /* PHStation.m in Sources */ = {isa = PBXBuildFile; fileRef = D815142D18DB50DA0052FCC7 /* PHStation.m */; };
 		D815143118DB50DA0052FCC7 /* PHLine.m in Sources */ = {isa = PBXBuildFile; fileRef = D815143018DB50DA0052FCC7 /* PHLine.m */; };
 		D815143418DB561C0052FCC7 /* PHTrain+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = D815143318DB561C0052FCC7 /* PHTrain+Create.m */; };
+		D822453C18DC84DA005B6646 /* PHStation.m in Sources */ = {isa = PBXBuildFile; fileRef = D822453B18DC84DA005B6646 /* PHStation.m */; };
 		D82BA9C718D30ACE00CB568C /* PHNetworkingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D82BA9C618D30ACE00CB568C /* PHNetworkingManager.m */; };
 		D82BA9EE18D3188000CB568C /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = D82BA9CA18D3188000CB568C /* AFHTTPRequestOperation.m */; };
 		D82BA9EF18D3188000CB568C /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D82BA9CC18D3188000CB568C /* AFHTTPRequestOperationManager.m */; };
@@ -65,12 +65,12 @@
 /* Begin PBXFileReference section */
 		D815142918DB50DA0052FCC7 /* PHTrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHTrain.h; path = Sources/PHTrain.h; sourceTree = "<group>"; };
 		D815142A18DB50DA0052FCC7 /* PHTrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHTrain.m; path = Sources/PHTrain.m; sourceTree = "<group>"; };
-		D815142C18DB50DA0052FCC7 /* PHStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHStation.h; path = Sources/PHStation.h; sourceTree = "<group>"; };
-		D815142D18DB50DA0052FCC7 /* PHStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHStation.m; path = Sources/PHStation.m; sourceTree = "<group>"; };
 		D815142F18DB50DA0052FCC7 /* PHLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHLine.h; path = Sources/PHLine.h; sourceTree = "<group>"; };
 		D815143018DB50DA0052FCC7 /* PHLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHLine.m; path = Sources/PHLine.m; sourceTree = "<group>"; };
 		D815143218DB561C0052FCC7 /* PHTrain+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PHTrain+Create.h"; path = "Sources/PHTrain+Create.h"; sourceTree = "<group>"; };
 		D815143318DB561C0052FCC7 /* PHTrain+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "PHTrain+Create.m"; path = "Sources/PHTrain+Create.m"; sourceTree = "<group>"; };
+		D822453A18DC84DA005B6646 /* PHStation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHStation.h; path = Sources/PHStation.h; sourceTree = "<group>"; };
+		D822453B18DC84DA005B6646 /* PHStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHStation.m; path = Sources/PHStation.m; sourceTree = "<group>"; };
 		D82BA9C518D30ACE00CB568C /* PHNetworkingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHNetworkingManager.h; path = Sources/PHNetworkingManager.h; sourceTree = "<group>"; };
 		D82BA9C618D30ACE00CB568C /* PHNetworkingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHNetworkingManager.m; path = Sources/PHNetworkingManager.m; sourceTree = "<group>"; };
 		D82BA9C918D3188000CB568C /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -353,11 +353,11 @@
 				D815143318DB561C0052FCC7 /* PHTrain+Create.m */,
 				D815142918DB50DA0052FCC7 /* PHTrain.h */,
 				D815142A18DB50DA0052FCC7 /* PHTrain.m */,
-				D815142C18DB50DA0052FCC7 /* PHStation.h */,
-				D815142D18DB50DA0052FCC7 /* PHStation.m */,
 				D815142F18DB50DA0052FCC7 /* PHLine.h */,
 				D815143018DB50DA0052FCC7 /* PHLine.m */,
 				D8F63BCB18D1FF8100BED55E /* DataModel.xcdatamodeld */,
+				D822453A18DC84DA005B6646 /* PHStation.h */,
+				D822453B18DC84DA005B6646 /* PHStation.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -469,6 +469,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D822453C18DC84DA005B6646 /* PHStation.m in Sources */,
 				D82BA9F918D3188000CB568C /* UIAlertView+AFNetworking.m in Sources */,
 				D82BA9FB18D3188000CB568C /* UIImageView+AFNetworking.m in Sources */,
 				D82BA9FA18D3188000CB568C /* UIButton+AFNetworking.m in Sources */,
@@ -494,7 +495,6 @@
 				D82BA9F818D3188000CB568C /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				D82BA9FD18D3188000CB568C /* UIRefreshControl+AFNetworking.m in Sources */,
 				D82BA9FC18D3188000CB568C /* UIProgressView+AFNetworking.m in Sources */,
-				D815142E18DB50DA0052FCC7 /* PHStation.m in Sources */,
 				D8E3FF5818D1FD1D0031089F /* main.m in Sources */,
 				D82BA9FE18D3188000CB568C /* UIWebView+AFNetworking.m in Sources */,
 				D815142B18DB50DA0052FCC7 /* PHTrain.m in Sources */,

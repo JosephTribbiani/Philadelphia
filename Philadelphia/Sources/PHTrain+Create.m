@@ -15,8 +15,8 @@
     PHTrain* train = nil;
     NSFetchRequest* request = [NSFetchRequest fetchRequestWithEntityName:@"PHTrain"];
     request.predicate = [NSPredicate predicateWithFormat:@"signature = %@",[info objectForKey:@"signature"]];
-    NSError *error = nil;
-    NSArray *matches = [context executeFetchRequest:request error:&error];
+    NSError* error = nil;
+    NSArray* matches = [context executeFetchRequest:request error:&error];
     
     if ([matches count] != 0)
     {

@@ -60,10 +60,20 @@
             for (NSDictionary* stop in stopes)
             {
                 NSMutableArray* lineIds = [NSMutableArray new];
+                NSMutableDictionary* stationPositions = [NSMutableDictionary new];
                 NSArray* positions = stop[@"positions"];
                 for (NSArray* position in positions)
                 {
                     [lineIds addObject:position[0]];
+                    NSMutableDictionary* linePosition = [stationPositions objectForKey:position[0]];
+                    if (linePosition == nil)
+                    {
+                        linePosition = [NSMutableDictionary new];
+                        [stationPositions setObject:linePosition forKey:position[0]];
+                    }
+                    NSString* direction = position[1];
+                    NSString* sequenceNumber = position[2];
+                    [linePosition setObject:sequenceNumber forKey:direction];
                 }
                 
                 // calculate crosses
@@ -90,6 +100,7 @@
                                                                                                    @"latitude" : stop[@"lat"],
                                                                                                    @"longitude" : stop[@"lon"],
                                                                                                    @"lines" : lineIds,
+                                                                                                   @"positions" : stationPositions,
                                                                                                    @"trains" : [NSMutableArray new]}]; // trains placeholder
                 [stopsMutable addObject:mutableStop];
             }
@@ -113,19 +124,26 @@
                         NSArray* launches = schedule[@"launches"];
                         for (NSNumber* launch in launches)
                         {
-                            NSMutableArray *patterns = [NSMutableArray arrayWithArray:specificRoute[@"pattern"]];
-                            [patterns enumerateObjectsUsingBlock:^(NSArray* patternItem, NSUInteger idx, BOOL *stop)
+                            NSArray *patterns = [NSMutableArray arrayWithArray:specificRoute[@"pattern"]];
+                            for (NSArray* pattern in patterns)
                             {
-                                NSInteger stopTime = [patternItem[0] integerValue] + [launch integerValue];
-                                NSString* stopId = [patternItem[1] stringValue];
-                                [timeStationTable setObject:@(stopTime) forKey:stopId];
-                            }];
+                                NSInteger stopTime = [pattern[1] integerValue] + [launch integerValue];
+                                NSString* stopId = [pattern[0] stringValue];
+                                NSMutableArray* stopTimes = [timeStationTable objectForKey:stopId];
+                                if (stopTimes == nil)
+                                {
+                                    stopTimes = [NSMutableArray new];
+                                    [timeStationTable setObject:stopTimes forKey:stopId];
+                                }
+                                [stopTimes addObject:@(stopTime)];
+                            }
                         }
                         [trainSchedule addObject:@{@"days" : schedule[@"days"],
                                                    @"schedule" : timeStationTable}];
+                        
                     }
                     [train setObject:trainSchedule forKey:@"trainSchedule"];
-//                    [train setObject:trainSchedule forKey:specificRoute[@"signature"]];
+                    [train setObject:route[@"directionId"] forKey:@"direction"];
                     [trains addObject:train];
                 }
             }

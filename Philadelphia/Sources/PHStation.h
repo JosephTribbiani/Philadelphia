@@ -2,7 +2,7 @@
 //  PHStation.h
 //  Philadelphia
 //
-//  Created by Igor Bogatchuk on 3/20/14.
+//  Created by Igor Bogatchuk on 3/21/14.
 //  Copyright (c) 2014 Igor Bogatchuk. All rights reserved.
 //
 
@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSNumber * longitude;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * stopId;
+@property (nonatomic, retain) NSData * positions;
 @property (nonatomic, retain) NSSet *lines;
 @property (nonatomic, retain) NSSet *trains;
 @end
