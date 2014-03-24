@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PHMainController : UIViewController
+@class PHLine;
+
+@interface PHDetailViewController : UIViewController
+
+- (void)selectLine:(PHLine*)line;
 
 @end

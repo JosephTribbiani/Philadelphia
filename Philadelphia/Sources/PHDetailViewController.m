@@ -14,7 +14,7 @@
 #import <MapKit/MapKit.h>
 #import <objc/runtime.h>
 
-#import "PHMainController.h"
+#import "PHDetailViewController.h"
 #import "PHCoreDataManager.h"
 #import "PHAppDelegate.h"
 #import "PHLine.h"
@@ -24,15 +24,17 @@
 
 #define kNumberOfTrainsToAccept 10
 
-@interface PHMainController () <MKMapViewDelegate>
+@interface PHDetailViewController () <MKMapViewDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView* mapView;
 @property (nonatomic, strong) PHCoreDataManager* coreDataManager;
 @property (nonatomic, strong) NSMutableDictionary* lines;
 
+@property (strong, nonatomic) PHLine* selectedLine;
+
 @end
 
-@implementation PHMainController
+@implementation PHDetailViewController
 
 - (void)viewDidLoad
 {
@@ -41,7 +43,7 @@
     self.coreDataManager = ((PHAppDelegate*)[UIApplication sharedApplication].delegate).coreDataManger;
     
     [self addLines];
-    [self addAnnotations];
+//    [self addAnnotations];
     [self.mapView showAnnotations:self.mapView.annotations animated:YES];
     
     [self calculations];
@@ -89,9 +91,15 @@
                 coordinates[i++] = CLLocationCoordinate2DMake([point[0] floatValue], [point[1] floatValue]);
             }
             MKPolyline* polyLine = [MKPolyline polylineWithCoordinates:coordinates count:[shape count]];
-            objc_setAssociatedObject(polyLine, "color", [[self colors] objectAtIndex:lineIndex], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             objc_setAssociatedObject(polyLine, "lineId", line.lineId, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-            [self.mapView addOverlay:polyLine];
+            if ([line.lineId isEqualToString:self.selectedLine.lineId])
+            {
+                [self.mapView insertOverlay:polyLine atIndex:0];
+            }
+            else
+            {
+                [self.mapView addOverlay:polyLine];
+            }
         }
         lineIndex++;
     }
@@ -118,6 +126,15 @@
              [UIColor orangeColor]];
 }
 
+#pragma mark - 
+
+- (void)selectLine:(PHLine*)line
+{
+    self.selectedLine = line;
+    [self.mapView removeOverlays:[self.mapView overlays]];
+    [self addLines];
+}
+
 #pragma mark - MapViewDelegate
 
 - (MKOverlayRenderer*)mapView:(MKMapView*)mapView rendererForOverlay:(id<MKOverlay>)overlay
@@ -126,7 +143,14 @@
     if ([overlay isKindOfClass:[MKPolyline class]])
     {
         MKPolylineRenderer* renderer = [[MKPolylineRenderer alloc] initWithOverlay:overlay];
-        renderer.strokeColor = objc_getAssociatedObject(overlay, "color");
+        if ([self.selectedLine.lineId isEqualToString:objc_getAssociatedObject(overlay, "lineId")])
+        {
+            renderer.strokeColor = [UIColor redColor];
+        }
+        else
+        {
+            renderer.strokeColor = [UIColor blueColor];
+        }
         renderer.alpha = 0.5;
         renderer.lineWidth = 5.0;
         result = renderer;
@@ -212,11 +236,11 @@
 - (void)calculations
 {
     NSFetchRequest* startRequest = [NSFetchRequest fetchRequestWithEntityName:@"PHStation"];
-    startRequest.predicate = [NSPredicate predicateWithFormat:@"stopId = 1281"];
+    startRequest.predicate = [NSPredicate predicateWithFormat:@"stopId = 1285"];
     PHStation* startStation = [[self.coreDataManager.managedObjectContext executeFetchRequest:startRequest error:NULL] lastObject];
     
     NSFetchRequest* stopRequest = [NSFetchRequest fetchRequestWithEntityName:@"PHStation"];
-    stopRequest.predicate = [NSPredicate predicateWithFormat:@"stopId = 1284"];
+    stopRequest.predicate = [NSPredicate predicateWithFormat:@"stopId = 1281"];
     PHStation* stopStation = [[self.coreDataManager.managedObjectContext executeFetchRequest:stopRequest error:NULL] lastObject];
     
     NSArray* possibleResults = [self findTrainsFromStation:startStation toStation:stopStation];

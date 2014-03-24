@@ -11,6 +11,7 @@
 		D822453C18DC84DA005B6646 /* PHStation.m in Sources */ = {isa = PBXBuildFile; fileRef = D822453B18DC84DA005B6646 /* PHStation.m */; };
 		D828766118E0444400E08697 /* PHTrain.m in Sources */ = {isa = PBXBuildFile; fileRef = D828766018E0444400E08697 /* PHTrain.m */; };
 		D828766418E0444500E08697 /* PHLine.m in Sources */ = {isa = PBXBuildFile; fileRef = D828766318E0444500E08697 /* PHLine.m */; };
+		D828766718E060AF00E08697 /* PHMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D828766618E060AF00E08697 /* PHMasterViewController.m */; };
 		D82BA9C718D30ACE00CB568C /* PHNetworkingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D82BA9C618D30ACE00CB568C /* PHNetworkingManager.m */; };
 		D82BA9EE18D3188000CB568C /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = D82BA9CA18D3188000CB568C /* AFHTTPRequestOperation.m */; };
 		D82BA9EF18D3188000CB568C /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D82BA9CC18D3188000CB568C /* AFHTTPRequestOperationManager.m */; };
@@ -42,7 +43,7 @@
 		D8E3FF5818D1FD1D0031089F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E3FF5718D1FD1D0031089F /* main.m */; };
 		D8E3FF5C18D1FD1D0031089F /* PHAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E3FF5B18D1FD1D0031089F /* PHAppDelegate.m */; };
 		D8E3FF5F18D1FD1D0031089F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8E3FF5D18D1FD1D0031089F /* Main.storyboard */; };
-		D8E3FF6218D1FD1D0031089F /* PHMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E3FF6118D1FD1D0031089F /* PHMainController.m */; };
+		D8E3FF6218D1FD1D0031089F /* PHDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8E3FF6118D1FD1D0031089F /* PHDetailViewController.m */; };
 		D8E3FF6418D1FD1D0031089F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8E3FF6318D1FD1D0031089F /* Images.xcassets */; };
 		D8E3FF6B18D1FD1D0031089F /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8E3FF6A18D1FD1D0031089F /* XCTest.framework */; };
 		D8E3FF6C18D1FD1D0031089F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8E3FF4B18D1FD1D0031089F /* Foundation.framework */; };
@@ -71,6 +72,8 @@
 		D828766018E0444400E08697 /* PHTrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHTrain.m; path = Sources/PHTrain.m; sourceTree = "<group>"; };
 		D828766218E0444500E08697 /* PHLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHLine.h; path = Sources/PHLine.h; sourceTree = "<group>"; };
 		D828766318E0444500E08697 /* PHLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHLine.m; path = Sources/PHLine.m; sourceTree = "<group>"; };
+		D828766518E060AF00E08697 /* PHMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHMasterViewController.h; path = "Sources/UIKit+AFNetworking/PHMasterViewController.h"; sourceTree = "<group>"; };
+		D828766618E060AF00E08697 /* PHMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHMasterViewController.m; path = "Sources/UIKit+AFNetworking/PHMasterViewController.m"; sourceTree = "<group>"; };
 		D82BA9C518D30ACE00CB568C /* PHNetworkingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHNetworkingManager.h; path = Sources/PHNetworkingManager.h; sourceTree = "<group>"; };
 		D82BA9C618D30ACE00CB568C /* PHNetworkingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHNetworkingManager.m; path = Sources/PHNetworkingManager.m; sourceTree = "<group>"; };
 		D82BA9C918D3188000CB568C /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -130,8 +133,8 @@
 		D8E3FF5A18D1FD1D0031089F /* PHAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PHAppDelegate.h; path = Sources/PHAppDelegate.h; sourceTree = "<group>"; };
 		D8E3FF5B18D1FD1D0031089F /* PHAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PHAppDelegate.m; path = Sources/PHAppDelegate.m; sourceTree = "<group>"; };
 		D8E3FF5E18D1FD1D0031089F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		D8E3FF6018D1FD1D0031089F /* PHMainController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PHMainController.h; path = Sources/PHMainController.h; sourceTree = "<group>"; };
-		D8E3FF6118D1FD1D0031089F /* PHMainController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PHMainController.m; path = Sources/PHMainController.m; sourceTree = "<group>"; };
+		D8E3FF6018D1FD1D0031089F /* PHDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PHDetailViewController.h; path = Sources/PHDetailViewController.h; sourceTree = "<group>"; };
+		D8E3FF6118D1FD1D0031089F /* PHDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PHDetailViewController.m; path = Sources/PHDetailViewController.m; sourceTree = "<group>"; };
 		D8E3FF6318D1FD1D0031089F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Resources/Images.xcassets; sourceTree = "<group>"; };
 		D8E3FF6918D1FD1D0031089F /* PhiladelphiaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhiladelphiaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8E3FF6A18D1FD1D0031089F /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -365,8 +368,10 @@
 		D8F63BE418D20D1600BED55E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				D8E3FF6018D1FD1D0031089F /* PHMainController.h */,
-				D8E3FF6118D1FD1D0031089F /* PHMainController.m */,
+				D8E3FF6018D1FD1D0031089F /* PHDetailViewController.h */,
+				D8E3FF6118D1FD1D0031089F /* PHDetailViewController.m */,
+				D828766518E060AF00E08697 /* PHMasterViewController.h */,
+				D828766618E060AF00E08697 /* PHMasterViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -491,9 +496,10 @@
 				D8403E7D18D889E800B99DF8 /* PHAnnotation.m in Sources */,
 				D8F63BCD18D1FF8100BED55E /* DataModel.xcdatamodeld in Sources */,
 				D82BA9F518D3188000CB568C /* AFURLResponseSerialization.m in Sources */,
-				D8E3FF6218D1FD1D0031089F /* PHMainController.m in Sources */,
+				D8E3FF6218D1FD1D0031089F /* PHDetailViewController.m in Sources */,
 				D82BA9F818D3188000CB568C /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				D82BA9FD18D3188000CB568C /* UIRefreshControl+AFNetworking.m in Sources */,
+				D828766718E060AF00E08697 /* PHMasterViewController.m in Sources */,
 				D82BA9FC18D3188000CB568C /* UIProgressView+AFNetworking.m in Sources */,
 				D8E3FF5818D1FD1D0031089F /* main.m in Sources */,
 				D82BA9FE18D3188000CB568C /* UIWebView+AFNetworking.m in Sources */,
