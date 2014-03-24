@@ -105,7 +105,7 @@
                 [stopsMutable addObject:mutableStop];
             }
             
-            // roureViews
+            // routeViews
             NSArray* routes = responseObject[@"virtualRouteViews"];
             NSMutableArray* trains = [NSMutableArray new];
             for (NSDictionary* route in routes)
@@ -143,7 +143,9 @@
                         
                     }
                     [train setObject:trainSchedule forKey:@"trainSchedule"];
-                    [train setObject:route[@"directionId"] forKey:@"direction"];
+                    
+                    [train setObject:@([route[@"directionId"] integerValue]) forKey:@"direction"];
+                    [train setObject:route[@"lineId"] forKey:@"lineId"];
                     [trains addObject:train];
                 }
             }

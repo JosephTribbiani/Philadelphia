@@ -27,6 +27,13 @@
         train = [NSEntityDescription insertNewObjectForEntityForName:@"PHTrain" inManagedObjectContext:context];
         train.signature = info[@"signature"];
         train.schedule = [NSJSONSerialization dataWithJSONObject:info[@"trainSchedule"]options:0 error:NULL];
+        train.direction = info[@"direction"];
+        
+        NSFetchRequest* request = [NSFetchRequest fetchRequestWithEntityName:@"PHLine"];
+        request.predicate = [NSPredicate predicateWithFormat:@"lineId = %@",[info objectForKey:@"lineId"]];
+        PHLine* line = [[context executeFetchRequest:request error:NULL] lastObject];
+        train.line = line;
+        
     }
     return train;
 }

@@ -22,6 +22,8 @@
 #import "PHAnnotation.h"
 #import "PHTrain.h"
 
+#define kNumberOfTrainsToAccept 10
+
 @interface PHMainController () <MKMapViewDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView* mapView;
@@ -158,70 +160,87 @@
 
 #pragma mark - Calculations
 
-- (void)calculations
+- (NSArray*)findTrainsFromStation:(PHStation*)startStation toStation:(PHStation*)stopStation
 {
-    NSFetchRequest* startRequest = [NSFetchRequest fetchRequestWithEntityName:@"PHStation"];
-    startRequest.predicate = [NSPredicate predicateWithFormat:@"stopId = 1284"];
-    PHStation* startStation = [[self.coreDataManager.managedObjectContext executeFetchRequest:startRequest error:NULL] lastObject];
+    NSMutableArray* result = [NSMutableArray new];
 
-    NSFetchRequest* stopRequest = [NSFetchRequest fetchRequestWithEntityName:@"PHStation"];
-    stopRequest.predicate = [NSPredicate predicateWithFormat:@"stopId = 1281"];
-    PHStation* stopStation = [[self.coreDataManager.managedObjectContext executeFetchRequest:stopRequest error:NULL] lastObject];
-    
     NSSet* startStationTrains = startStation.trains;
     NSSet* stopStationTrains = stopStation.trains;
     
     NSMutableSet* crossTrains = [startStationTrains mutableCopy];
     [crossTrains intersectSet:stopStationTrains];
     
-    NSMutableArray* possibleTimes = [NSMutableArray new];
-    
-    for(PHTrain* train in crossTrains)
+    for (PHTrain* train in crossTrains)
     {
-        NSArray* schedules = [NSJSONSerialization JSONObjectWithData:train.schedule options:0 error:NULL];
-        for (NSDictionary* schedule in schedules)
+        if ([self directionForLine:train.line startStation:startStation stopStation:stopStation] == [train.direction boolValue])
         {
-            NSString* days = schedule[@"days"];
-            NSRange dayRange = [days rangeOfString:[self currentDayOfWeek]];
-            if (dayRange.location != NSNotFound)
+            NSArray* schedules = [NSJSONSerialization JSONObjectWithData:train.schedule options:0 error:NULL];
+            for (NSDictionary* schedule in schedules)
             {
-                NSLog(@"------------------");
-                NSArray* startTimes = [schedule[@"schedule"] objectForKey:startStation.stopId];
-                NSArray* endTimes = [schedule[@"schedule"] objectForKey:stopStation.stopId];
-                NSLog(@"train: %@",train.signature);
-                NSTimeInterval currentTime = [self currentTimeIntervalSinceMidnight];
-                NSUInteger index = 0;
-                for (NSNumber* time in startTimes)
+                NSString* days = schedule[@"days"];
+                NSRange dayRange = [days rangeOfString:[self currentDayOfWeek]];
+                if (dayRange.location != NSNotFound)
                 {
-                    if ([time floatValue] > currentTime)
+                    NSArray* startTimes = [schedule[@"schedule"] objectForKey:startStation.stopId];
+                    NSArray* endTimes = [schedule[@"schedule"] objectForKey:stopStation.stopId];
+                    NSTimeInterval currentTime = [self currentTimeIntervalSinceMidnight];
+                    NSUInteger index = 0;
+                    for (NSNumber* time in startTimes)
                     {
-                        [possibleTimes addObject:@{@"trainId" : train.signature,
-                                                   @"startTime" : time,
-                                                   @"endTime" : [endTimes objectAtIndex:index]}];
+                        if ([time floatValue] > currentTime)
+                        {
+                            [result addObject:@{@"trainId" : train.signature,
+                                                       @"startTime" : time,
+                                                       @"endTime" : [endTimes objectAtIndex:index]}];
+                        }
+                        index++;
+                        NSLog(@"%@", [time stringValue]);
                     }
-                    index++;
-                    NSLog(@"%@", [time stringValue]);
                 }
             }
         }
     }
     
-    [possibleTimes sortUsingComparator:^NSComparisonResult(NSDictionary* time1, NSDictionary* time2)
-    {
-        return [[time1 objectForKey:@"startTime"] compare:[time2 objectForKey:@"startTime"]];
-    }];
+    [result sortUsingComparator:^NSComparisonResult(NSDictionary* time1, NSDictionary* time2)
+     {
+         return [[time1 objectForKey:@"startTime"] compare:[time2 objectForKey:@"startTime"]];
+     }];
     
+    return [result count] == 0 ? nil : [NSArray arrayWithArray:result];
+}
+
+- (void)calculations
+{
+    NSFetchRequest* startRequest = [NSFetchRequest fetchRequestWithEntityName:@"PHStation"];
+    startRequest.predicate = [NSPredicate predicateWithFormat:@"stopId = 1281"];
+    PHStation* startStation = [[self.coreDataManager.managedObjectContext executeFetchRequest:startRequest error:NULL] lastObject];
     
-    NSLog(@"Current time: %f",[self currentTimeIntervalSinceMidnight]);
-    NSUInteger index = 0;
-    for (NSDictionary* possibleTime in possibleTimes)
+    NSFetchRequest* stopRequest = [NSFetchRequest fetchRequestWithEntityName:@"PHStation"];
+    stopRequest.predicate = [NSPredicate predicateWithFormat:@"stopId = 1284"];
+    PHStation* stopStation = [[self.coreDataManager.managedObjectContext executeFetchRequest:stopRequest error:NULL] lastObject];
+    
+    NSArray* possibleResults = [self findTrainsFromStation:startStation toStation:stopStation];
+    for (NSDictionary* possibleResult in possibleResults)
     {
-        NSLog(@"train: %@ time: %@ endTime: %@", possibleTime[@"trainId"], possibleTime[@"startTime"], possibleTime[@"endTime"]);
-        if (index > 10)
-        {
-            break;
-        }
-        index++;
+         NSLog(@"train: %@ time: %@ endTime: %@", possibleResult[@"trainId"], [self stringFromTimeInterval:[possibleResult[@"startTime"] integerValue]],[self stringFromTimeInterval:[possibleResult[@"endTime"] integerValue]]);
+    }
+}
+
+- (BOOL)directionForLine:(PHLine*) line startStation:(PHStation*)startStation stopStation:(PHStation*)stopStation
+{
+    NSDictionary* startStationPositions = [[NSJSONSerialization JSONObjectWithData:startStation.positions options:0 error:NULL] objectForKey:line.lineId];
+    NSInteger startStationDirectPosition = [[startStationPositions objectForKey:@"0"] integerValue];
+    
+    NSDictionary* stopStationPositions = [[NSJSONSerialization JSONObjectWithData:stopStation.positions options:0 error:NULL] objectForKey:line.lineId];
+    NSInteger stopStationDirectPosition = [[stopStationPositions objectForKey:@"0"] integerValue];
+    
+    if (startStationDirectPosition < stopStationDirectPosition)
+    {
+        return NO;
+    }
+    else
+    {
+        return YES;
     }
 }
 
@@ -239,6 +258,15 @@
     NSDateComponents* components = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:currentDate];
     NSDate* midnightDate = [calendar dateFromComponents:components];
     return [currentDate timeIntervalSinceDate:midnightDate];
+}
+
+- (NSString *)stringFromTimeInterval:(NSTimeInterval)timeInterval
+{
+    NSInteger integerTimeInterval = (NSInteger)timeInterval;
+    NSInteger seconds = integerTimeInterval % 60;
+    NSInteger minutes = (integerTimeInterval / 60) % 60;
+    NSInteger hours = (integerTimeInterval / 3600);
+    return [NSString stringWithFormat:@"%02i:%02i:%02i", hours, minutes, seconds];
 }
 
 @end

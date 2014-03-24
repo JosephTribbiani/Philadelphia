@@ -2,20 +2,22 @@
 //  PHTrain.h
 //  Philadelphia
 //
-//  Created by Igor Bogatchuk on 3/20/14.
+//  Created by Igor Bogatchuk on 3/24/14.
 //  Copyright (c) 2014 Igor Bogatchuk. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class PHStation;
+@class PHLine, PHStation;
 
 @interface PHTrain : NSManagedObject
 
-@property (nonatomic, retain) NSString * signature;
 @property (nonatomic, retain) NSData * schedule;
+@property (nonatomic, retain) NSString * signature;
+@property (nonatomic, retain) NSNumber * direction;
 @property (nonatomic, retain) NSSet *stations;
+@property (nonatomic, retain) PHLine *line;
 @end
 
 @interface PHTrain (CoreDataGeneratedAccessors)
