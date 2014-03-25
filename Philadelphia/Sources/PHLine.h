@@ -2,7 +2,7 @@
 //  PHLine.h
 //  Philadelphia
 //
-//  Created by Igor Bogatchuk on 3/24/14.
+//  Created by Igor Bogatchuk on 3/25/14.
 //  Copyright (c) 2014 Igor Bogatchuk. All rights reserved.
 //
 
@@ -16,6 +16,7 @@
 @property (nonatomic, retain) NSData * crosses;
 @property (nonatomic, retain) NSString * lineId;
 @property (nonatomic, retain) NSData * shapes;
+@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSSet *stations;
 @property (nonatomic, retain) NSSet *trains;
 @end

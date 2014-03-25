@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *startStationButton;
 @property (weak, nonatomic) IBOutlet UIButton *stopStationButton;
 @property (weak, nonatomic) IBOutlet UITableView *resultsTableView;
+@property (weak, nonatomic) IBOutlet UIButton *searchTrainButton;
 
 @property (strong, nonatomic) NSArray* lines;
 @property (strong, nonatomic) PHLine* selectedLine;
@@ -53,6 +54,8 @@
 {
     [super viewDidLoad];
     [self.pickerView reloadAllComponents];
+    [self.startStationButton setTitle:NSLocalizedString(@"stationPlaceholder", @"") forState:UIControlStateNormal];
+    [self.stopStationButton setTitle:NSLocalizedString(@"stationPlaceholder", @"") forState:UIControlStateNormal];
     
 	// Do any additional setup after loading the view.
 }
@@ -84,18 +87,9 @@
 
 #pragma mark - Actions
 
-- (IBAction)startStationButtonDidPressed:(id)sender
-{
-}
-
-- (IBAction)stopStationButtonDidPressed:(id)sender
-{
-    
-}
-
 - (IBAction)searchTrain:(id)sender
 {
-    self.resultsToShow = [self findTrainsFromStation:self.startStation toStation:self.stopStation];
+    self.resultsToShow = [self trainsFromStation:self.startStation toStation:self.stopStation];
     [self.resultsTableView reloadData];
 }
 
@@ -103,15 +97,35 @@
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    PHLine* line = [self.lines objectAtIndex:row];
-    return line.lineId;
+    NSString* title = nil;
+    if (row == 0)
+    {
+        title = NSLocalizedString(@"none", @"");
+    }
+    else
+    {
+        PHLine* line = [self.lines objectAtIndex:row - 1];
+        title = line.name;
+    }
+    return title;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     PHDetailViewController* detailViewController = (PHDetailViewController*)[[self.splitViewController.viewControllers objectAtIndex:1] topViewController];
-    [detailViewController selectLine:[self.lines objectAtIndex:row]];
-    self.selectedLine = [self.lines objectAtIndex:row];
+
+    if (row == 0)
+    {
+        [detailViewController selectLine:nil];
+        self.selectedLine = nil;
+    }
+    else
+    {
+        [detailViewController selectLine:[self.lines objectAtIndex:row - 1]];
+        self.selectedLine = [self.lines objectAtIndex:row];
+    }
+    [self.startStationButton setTitle:NSLocalizedString(@"stationPlaceholder", @"") forState:UIControlStateNormal];
+    [self.stopStationButton setTitle:NSLocalizedString(@"stationPlaceholder", @"") forState:UIControlStateNormal];
 }
 
 #pragma mark - PickerViewDataSource
@@ -166,7 +180,7 @@
 
 #pragma mark - Calculations
 
-- (NSArray*)findTrainsFromStation:(PHStation*)startStation toStation:(PHStation*)stopStation
+- (NSArray*)trainsFromStation:(PHStation*)startStation toStation:(PHStation*)stopStation
 {
     NSMutableArray* result = [NSMutableArray new];
     
@@ -200,7 +214,6 @@
                                                 @"endTime" : [endTimes objectAtIndex:index]}];
                         }
                         index++;
-                        NSLog(@"%@", [time stringValue]);
                     }
                 }
             }
@@ -215,24 +228,7 @@
     return [result count] == 0 ? nil : [NSArray arrayWithArray:result];
 }
 
-- (void)calculations
-{
-    NSFetchRequest* startRequest = [NSFetchRequest fetchRequestWithEntityName:@"PHStation"];
-    startRequest.predicate = [NSPredicate predicateWithFormat:@"stopId = 1285"];
-    PHStation* startStation = [[self.coreDataManager.managedObjectContext executeFetchRequest:startRequest error:NULL] lastObject];
-    
-    NSFetchRequest* stopRequest = [NSFetchRequest fetchRequestWithEntityName:@"PHStation"];
-    stopRequest.predicate = [NSPredicate predicateWithFormat:@"stopId = 1281"];
-    PHStation* stopStation = [[self.coreDataManager.managedObjectContext executeFetchRequest:stopRequest error:NULL] lastObject];
-    
-    NSArray* possibleResults = [self findTrainsFromStation:startStation toStation:stopStation];
-    for (NSDictionary* possibleResult in possibleResults)
-    {
-        NSLog(@"train: %@ time: %@ endTime: %@", possibleResult[@"trainId"], [self stringFromTimeInterval:[possibleResult[@"startTime"] integerValue]],[self stringFromTimeInterval:[possibleResult[@"endTime"] integerValue]]);
-    }
-}
-
-- (BOOL)directionForLine:(PHLine*) line startStation:(PHStation*)startStation stopStation:(PHStation*)stopStation
+- (BOOL)directionForLine:(PHLine*)line startStation:(PHStation*)startStation stopStation:(PHStation*)stopStation
 {
     NSDictionary* startStationPositions = [[NSJSONSerialization JSONObjectWithData:startStation.positions options:0 error:NULL] objectForKey:line.lineId];
     NSInteger startStationDirectPosition = [[startStationPositions objectForKey:@"0"] integerValue];
@@ -264,6 +260,7 @@
     NSDateComponents* components = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:currentDate];
     NSDate* midnightDate = [calendar dateFromComponents:components];
     return [currentDate timeIntervalSinceDate:midnightDate];
+//    return 0;
 }
 
 - (NSString *)stringFromTimeInterval:(NSTimeInterval)timeInterval

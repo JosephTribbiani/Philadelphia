@@ -27,6 +27,8 @@
         line = [NSEntityDescription insertNewObjectForEntityForName:@"PHLine" inManagedObjectContext:context];
         line.lineId = info[@"lineId"];
         line.shapes = info[@"shapes"];
+        line.name = info[@"name"];
+        
         line.crosses = [NSJSONSerialization dataWithJSONObject:info[@"crosses"] options:0 error:NULL];
     }
     return line;

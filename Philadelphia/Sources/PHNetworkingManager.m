@@ -110,6 +110,13 @@
             NSMutableArray* trains = [NSMutableArray new];
             for (NSDictionary* route in routes)
             {
+                for (NSMutableDictionary* mutableLine in linesMutable)
+                {
+                    if ([[mutableLine objectForKey:@"lineId"] isEqualToString:route[@"lineId"]])
+                    {
+                        [mutableLine setObject:route[@"name"] forKey:@"name"];
+                    }
+                }
                 NSArray* specificRoutes = route[@"specificRoutes"];
                 for (NSDictionary* specificRoute in specificRoutes)
                 {

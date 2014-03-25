@@ -2,7 +2,7 @@
 //  PHLine.m
 //  Philadelphia
 //
-//  Created by Igor Bogatchuk on 3/24/14.
+//  Created by Igor Bogatchuk on 3/25/14.
 //  Copyright (c) 2014 Igor Bogatchuk. All rights reserved.
 //
 
@@ -16,6 +16,7 @@
 @dynamic crosses;
 @dynamic lineId;
 @dynamic shapes;
+@dynamic name;
 @dynamic stations;
 @dynamic trains;
 
