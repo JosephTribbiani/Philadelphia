@@ -16,9 +16,13 @@
 @property (nonatomic, copy) NSString* title;
 @property (nonatomic, copy) NSString* subtitle;
 
+//@property (nonatomic, assign) MKPinAnnotationColor pinColor;
+@property (nonatomic, strong) NSString* stopId;
+
 - (id)initWithLatitude:(CLLocationDegrees)latitude
 				 longitude:(CLLocationDegrees)longitude
 					  title:(NSString*)title
 				  subtitle:(NSString*)subtitle;
 
 @end
+

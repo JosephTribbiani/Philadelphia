@@ -22,6 +22,7 @@
 		_longitude = longitude;
 		_title = title;
 		_subtitle = subtitle;
+//        _pinColor = MKPinAnnotationColorRed;
 	}
 	return self;
 }

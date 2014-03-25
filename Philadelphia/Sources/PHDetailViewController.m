@@ -18,7 +18,7 @@
 #import "PHCoreDataManager.h"
 #import "PHAppDelegate.h"
 #import "PHLine.h"
-#import "PHStation.h"
+#import "PHStation+Utils.h"
 #import "PHAnnotation.h"
 #import "PHTrain.h"
 
@@ -44,10 +44,14 @@
     
     [self addLines];
 //    [self addAnnotations];
-    [self.mapView showAnnotations:self.mapView.annotations animated:YES];
+//    [self.mapView showAnnotations:self.mapView.annotations animated:YES];
+    
+    [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(39.95, -75.166667), MKCoordinateSpanMake(1, 1)) animated:YES];
     
     [self calculations];
     self.lines = [NSMutableDictionary new];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -58,15 +62,14 @@
 
 - (void)addAnnotations
 {
-    NSFetchRequest* request = [NSFetchRequest new];
-    NSEntityDescription* entityDescription = [NSEntityDescription entityForName:@"PHStation" inManagedObjectContext:self.coreDataManager.managedObjectContext];
-    request.entity = entityDescription;
-    
+    NSFetchRequest* request = [NSFetchRequest fetchRequestWithEntityName:@"PHStation"];
+    request.predicate = [NSPredicate predicateWithFormat:@"ANY lines.lineId == %@",self.selectedLine.lineId];
     NSArray* stations = [self.coreDataManager.managedObjectContext executeFetchRequest:request error:NULL];
     
     for (PHStation* station in stations)
     {
         PHAnnotation* annotation = [[PHAnnotation alloc] initWithLatitude:[station.latitude floatValue] longitude:[station.longitude floatValue] title:station.name subtitle:station.stopId];
+        annotation.stopId = station.stopId;
         [self.mapView addAnnotation:annotation];
     }
 }
@@ -94,16 +97,66 @@
             objc_setAssociatedObject(polyLine, "lineId", line.lineId, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             if ([line.lineId isEqualToString:self.selectedLine.lineId])
             {
-                [self.mapView insertOverlay:polyLine atIndex:0];
+                [self.mapView insertOverlay:polyLine atIndex:NSIntegerMax];
             }
             else
             {
-                [self.mapView addOverlay:polyLine];
+                [self.mapView insertOverlay:polyLine atIndex:0];
             }
         }
         lineIndex++;
     }
 }
+
+- (void)showCalloutViewForStation:(PHStation*)station
+{
+    NSArray* annotations = [self.mapView annotations];
+    for (id<MKAnnotation> annotation in annotations)
+    {
+        if ([annotation isKindOfClass:[PHAnnotation class]])
+        {
+            if ([((PHAnnotation*)annotation).stopId isEqualToString:station.stopId])
+            {
+                
+                [self.mapView selectAnnotation:annotation animated:YES];
+            }
+        }
+    }
+    
+}
+
+//- (void)highlightStationsFromStation:(PHStation*)station1 toStation:(PHStation*)station2 onLine:(PHLine*)line
+//{
+//    [self.mapView removeAnnotations:[self.mapView annotations]];
+//    NSFetchRequest* request = [NSFetchRequest fetchRequestWithEntityName:@"PHStation"];
+//    request.predicate = [NSPredicate predicateWithFormat:@"ANY lines.lineId == %@",self.selectedLine.lineId];
+//    NSArray* stations = [self.coreDataManager.managedObjectContext executeFetchRequest:request error:NULL];
+//    
+//    NSInteger station1Position = [station1 positionForLine:line direction:1];
+//    NSInteger station2Position = [station2 positionForLine:line direction:1];
+//    
+//    NSInteger maxPosition = station1Position > station2Position ? station1Position : station2Position;
+//    NSInteger minPosition = station1Position < station2Position ? station1Position : station2Position;
+//    
+//    for (PHStation* station in stations)
+//    {
+//    
+//        if ([station positionForLine:line direction:1] <= maxPosition && [station positionForLine:line direction:1] >= minPosition)
+//        {
+//            PHAnnotation* annotation = [[PHAnnotation alloc] initWithLatitude:[station.latitude floatValue] longitude:[station.longitude floatValue] title:station.name subtitle:station.stopId];
+//            annotation.pinColor = MKPinAnnotationColorGreen;
+//            [self.mapView addAnnotation:annotation];
+//        }
+//        else
+//        {
+//            PHAnnotation* annotation = [[PHAnnotation alloc] initWithLatitude:[station.latitude floatValue] longitude:[station.longitude floatValue] title:station.name subtitle:station.stopId];
+//            annotation.pinColor = MKPinAnnotationColorRed;
+//            [self.mapView addAnnotation:annotation];
+//        }
+//        PHAnnotation* annotation = [[PHAnnotation alloc] initWithLatitude:[station.latitude floatValue] longitude:[station.longitude floatValue] title:station.name subtitle:station.stopId];
+//        [self.mapView addAnnotation:annotation];
+//    }
+//}
 
 - (NSArray*)colors
 {
@@ -126,13 +179,16 @@
              [UIColor orangeColor]];
 }
 
-#pragma mark - 
+#pragma mark -
 
 - (void)selectLine:(PHLine*)line
 {
     self.selectedLine = line;
     [self.mapView removeOverlays:[self.mapView overlays]];
+    [self.mapView removeAnnotations:[self.mapView annotations]];
     [self addLines];
+    [self addAnnotations];
+    [self.mapView showAnnotations:self.mapView.annotations animated:YES];
 }
 
 #pragma mark - MapViewDelegate
@@ -146,41 +202,59 @@
         if ([self.selectedLine.lineId isEqualToString:objc_getAssociatedObject(overlay, "lineId")])
         {
             renderer.strokeColor = [UIColor redColor];
+            renderer.alpha = 1;
         }
         else
         {
             renderer.strokeColor = [UIColor blueColor];
+            renderer.alpha = 0.5;
         }
-        renderer.alpha = 0.5;
         renderer.lineWidth = 5.0;
         result = renderer;
     }
     return result;
 }
 
-- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
-{
-    NSString* stopId = [view.annotation subtitle];
-    NSFetchRequest* request = [[NSFetchRequest alloc] initWithEntityName:@"PHStation"];
-    request.predicate = [NSPredicate predicateWithFormat:@"stopId = %@",stopId];
-    PHStation* station = [[self.coreDataManager.managedObjectContext executeFetchRequest:request error:NULL] lastObject];
-    
-//    NSSet* trains = station.trains;
-//    NSLog(@"station: %@ TRAINS ---------------------------------------------", station.stopId);
-//    for(PHTrain* train in trains)
+//- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+//{
+//    NSString* stopId = [view.annotation subtitle];
+//    NSFetchRequest* request = [[NSFetchRequest alloc] initWithEntityName:@"PHStation"];
+//    request.predicate = [NSPredicate predicateWithFormat:@"stopId = %@",stopId];
+//    PHStation* station = [[self.coreDataManager.managedObjectContext executeFetchRequest:request error:NULL] lastObject];
+//    
+////    NSSet* trains = station.trains;
+////    NSLog(@"station: %@ TRAINS ---------------------------------------------", station.stopId);
+////    for(PHTrain* train in trains)
+////    {
+////        NSLog(@"%@",train.signature);
+////    }
+//    
+//    NSLog(@"station: %@ LINES ---------------------------------------------", station.stopId);
+//    NSSet* lines = station.lines;
+//    for(PHLine* line in lines)
 //    {
-//        NSLog(@"%@",train.signature);
+//        NSLog(@"%@",line.lineId);
 //    }
-    
-    NSLog(@"station: %@ LINES ---------------------------------------------", station.stopId);
-    NSSet* lines = station.lines;
-    for(PHLine* line in lines)
-    {
-        NSLog(@"%@",line.lineId);
-    }
-    
-    NSDictionary* positions = [NSJSONSerialization JSONObjectWithData:station.positions options:0 error:NULL];
-}
+//    
+//    NSDictionary* positions = [NSJSONSerialization JSONObjectWithData:station.positions options:0 error:NULL];
+//}
+
+//- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+//{
+//    MKPinAnnotationView *pin = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"pin"];
+//    
+//    if (pin == nil)
+//    {
+//        pin = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier: @"pin"];
+//    }
+//    else
+//    {
+//        pin.annotation = annotation;
+//    }
+////    pin.pinColor = ((PHAnnotation*)annotation).pinColor;
+//    
+//    return pin;
+//}
 
 #pragma mark - Calculations
 

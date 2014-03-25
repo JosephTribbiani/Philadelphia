@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 Igor Bogatchuk. All rights reserved.
 //
 
-#import "PHStation+Create.h"
+#import "PHStation+Utils.h"
 #import "PHLine+Create.h"
 #import "PHTrain+Create.h"
 
-@implementation PHStation (Create)
+@implementation PHStation (Utils)
 
 + (PHStation*)stationWithInfo:(NSDictionary*)info trains:(NSArray*)trainsInfo inManagedObjectContext:(NSManagedObjectContext*)context;
 {
@@ -89,6 +89,12 @@
         }
     }
     return station;
+}
+
+- (NSInteger)positionForLine:(PHLine*)line direction:(NSUInteger)direction
+{
+    NSDictionary* positions = [NSJSONSerialization JSONObjectWithData:self.positions options:0 error:NULL];
+    return [[[positions objectForKey:line.lineId] objectForKey:[NSString stringWithFormat:@"%d",direction]] integerValue];
 }
 
 @end

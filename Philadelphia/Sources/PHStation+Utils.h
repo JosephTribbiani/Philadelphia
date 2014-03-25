@@ -8,8 +8,9 @@
 
 #import "PHStation.h"
 
-@interface PHStation (Create)
+@interface PHStation (Utils)
 
 + (PHStation*)stationWithInfo:(NSDictionary*)info trains:(NSArray*)trains inManagedObjectContext:(NSManagedObjectContext*)context;
+- (NSInteger)positionForLine:(PHLine*)line direction:(NSUInteger)direction;
 
 @end

@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @class PHLine;
+@class PHStation;
 
 @interface PHDetailViewController : UIViewController
 
 - (void)selectLine:(PHLine*)line;
+- (void)showCalloutViewForStation:(PHStation*)station;
 
 @end

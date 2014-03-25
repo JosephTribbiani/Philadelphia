@@ -9,7 +9,7 @@
 #import "PHCoreDataManager.h"
 #import "PHNetworkingManager.h"
 #import "PHLine+Create.h"
-#import "PHStation+Create.h"
+#import "PHStation+Utils.h"
 
 @interface PHCoreDataManager()
 
