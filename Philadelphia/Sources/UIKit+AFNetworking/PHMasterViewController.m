@@ -118,12 +118,21 @@
     {
         [detailViewController selectLine:nil];
         self.selectedLine = nil;
+        [self.startStationButton setEnabled:NO];
+        [self.stopStationButton setEnabled:NO];
     }
     else
     {
         [detailViewController selectLine:[self.lines objectAtIndex:row - 1]];
-        self.selectedLine = [self.lines objectAtIndex:row];
+        self.selectedLine = [self.lines objectAtIndex:row - 1];
+        [self.startStationButton setEnabled:YES];
+        [self.stopStationButton setEnabled:YES];
     }
+    self.resultsToShow = nil;
+    [self.resultsTableView reloadData];
+    [self.searchTrainButton setEnabled:NO];
+    self.startStation = nil;
+    self.stopStation = nil;
     [self.startStationButton setTitle:NSLocalizedString(@"stationPlaceholder", @"") forState:UIControlStateNormal];
     [self.stopStationButton setTitle:NSLocalizedString(@"stationPlaceholder", @"") forState:UIControlStateNormal];
 }
@@ -167,6 +176,14 @@
     self.startStation = station;
     PHDetailViewController* detailViewController = (PHDetailViewController*)[[self.splitViewController.viewControllers objectAtIndex:1] topViewController];
     [detailViewController showCalloutViewForStation:station];
+    if (self.startStation != nil && self.stopStation != nil)
+    {
+        [self.searchTrainButton setEnabled:YES];
+    }
+    else
+    {
+        [self.searchTrainButton setEnabled:NO];
+    }
 }
 
 - (void)tableView:(PHSelectStationTableViewController *)tableView stopStationDidSelect:(PHStation *)station
@@ -176,6 +193,14 @@
     self.stopStation = station;
     PHDetailViewController* detailViewController = (PHDetailViewController*)[[self.splitViewController.viewControllers objectAtIndex:1] topViewController];
     [detailViewController showCalloutViewForStation:station];
+    if (self.startStation != nil && self.stopStation != nil)
+    {
+        [self.searchTrainButton setEnabled:YES];
+    }
+    else
+    {
+        [self.searchTrainButton setEnabled:NO];
+    }
 }
 
 #pragma mark - Calculations
@@ -260,7 +285,6 @@
     NSDateComponents* components = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:currentDate];
     NSDate* midnightDate = [calendar dateFromComponents:components];
     return [currentDate timeIntervalSinceDate:midnightDate];
-//    return 0;
 }
 
 - (NSString *)stringFromTimeInterval:(NSTimeInterval)timeInterval
