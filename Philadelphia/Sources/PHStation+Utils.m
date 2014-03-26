@@ -12,7 +12,7 @@
 
 @implementation PHStation (Utils)
 
-+ (PHStation*)stationWithInfo:(NSDictionary*)info trains:(NSArray*)trainsInfo inManagedObjectContext:(NSManagedObjectContext*)context;
++ (PHStation*)stationWithInfo:(NSDictionary*)info inManagedObjectContext:(NSManagedObjectContext*)context
 {
     PHStation* station = nil;
     NSFetchRequest* request = [NSFetchRequest fetchRequestWithEntityName:@"PHStation"];
@@ -54,39 +54,6 @@
                 // another error
             }
         }
-        NSString* stopId = station.stopId;
-        //settings trains
-        NSMutableSet* trains = [station mutableSetValueForKey:@"trains"];
-        for (NSDictionary* train in trainsInfo)
-        {
-            for (NSDictionary* trainSchedule in train[@"trainSchedule"])
-            {
-                NSArray* stopIds = [[trainSchedule objectForKey:@"schedule"] allKeys];
-                for (NSString* theStopId in stopIds)
-                {
-                    if ([theStopId isEqualToString:stopId])
-                    {
-                        NSFetchRequest* lineRequest = [NSFetchRequest fetchRequestWithEntityName:@"PHTrain"];
-                        lineRequest.predicate = [NSPredicate predicateWithFormat:@"signature = %@",train[@"signature"]];
-                        NSError* error = nil;
-                        NSArray* matches = [context executeFetchRequest:lineRequest error:&error];
-                        if ([matches count] == 0)
-                        {
-                            PHTrain* newTrain = [PHTrain trainWithInfo:train inManagedObjectContext:context];
-                            [trains addObject:newTrain];
-                        }
-                        else if ([matches count] == 1)
-                        {
-                            [trains addObject:[matches firstObject]];
-                        }
-                        else
-                        {
-                            // another error
-                        }
-                    }
-                }
-            }
-        }
     }
     return station;
 }
@@ -95,6 +62,30 @@
 {
     NSDictionary* positions = [NSJSONSerialization JSONObjectWithData:self.positions options:0 error:NULL];
     return [[[positions objectForKey:line.lineId] objectForKey:[NSString stringWithFormat:@"%d",direction]] integerValue];
+}
+
+- (NSSet*)passingTrains
+{
+    NSMutableSet* result = [NSMutableSet new];
+    for (PHLine* line in self.lines)
+    {
+        for (PHTrain* train in line.trains)
+        {
+            NSArray* schedules = [NSJSONSerialization JSONObjectWithData:train.schedule options:0 error:NULL];
+            for (NSDictionary* schedule in schedules)
+            {
+                NSArray* stopIds = [[schedule objectForKey:@"schedule"] allKeys];
+                for (NSString* stopId in stopIds)
+                {
+                    if ([stopId isEqualToString:self.stopId])
+                    {
+                        [result addObject:train];
+                    }
+                }
+            }
+        }
+    }
+    return [result count] > 0 ? [NSSet setWithSet:result] : nil;
 }
 
 @end

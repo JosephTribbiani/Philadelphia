@@ -9,11 +9,19 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@protocol PHCoreDatamanagerDelegate <NSObject>
+
+- (void)trainMapDidLoad;
+
+@end
+
 @interface PHCoreDataManager : NSObject
 
 @property (nonatomic, strong) NSManagedObjectContext* managedObjectContext;
 @property (nonatomic, strong) NSManagedObjectModel* managedObjectModel;
 @property (nonatomic, strong) NSPersistentStoreCoordinator* persistentStoreCoordinator;
+
+@property (nonatomic, weak) id<PHCoreDatamanagerDelegate> delegate;
 
 - (void)saveContext;
 - (void)loadTrainMap;

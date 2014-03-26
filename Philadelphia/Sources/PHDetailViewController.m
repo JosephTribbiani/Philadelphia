@@ -22,14 +22,13 @@
 #import "PHAnnotation.h"
 #import "PHTrain.h"
 
-#define kNumberOfTrainsToAccept 10
-
 @interface PHDetailViewController () <MKMapViewDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView* mapView;
 
 @property (nonatomic, strong) PHCoreDataManager* coreDataManager;
 @property (strong, nonatomic) PHLine* selectedLine;
+@property (nonatomic, strong) NSArray* polylines;
 
 @end
 
@@ -62,37 +61,47 @@
     }
 }
 
-- (void)addLines
+- (NSArray *)polylines
 {
-    NSFetchRequest* request = [NSFetchRequest new];
-    NSEntityDescription* entityDescription = [NSEntityDescription entityForName:@"PHLine" inManagedObjectContext:self.coreDataManager.managedObjectContext];
-    request.entity = entityDescription;
-    
-    NSArray* lines = [self.coreDataManager.managedObjectContext executeFetchRequest:request error:NULL];
-    NSUInteger lineIndex = 0;
-    for (PHLine* line in lines)
+    if (_polylines == nil)
     {
-        NSArray* shapes = [NSJSONSerialization JSONObjectWithData:line.shapes options:0 error:NULL];
-        for (NSArray* shape in shapes)
+        NSMutableArray* polylines = [NSMutableArray new];
+        NSFetchRequest* request = [NSFetchRequest fetchRequestWithEntityName:@"PHLine"];
+        NSArray* lines = [self.coreDataManager.managedObjectContext executeFetchRequest:request error:NULL];
+        for (PHLine* line in lines)
         {
-            NSUInteger i = 0;
-            CLLocationCoordinate2D coordinates[[shape count]];
-            for (NSArray* point in shape)
+            NSArray* shapes = [NSJSONSerialization JSONObjectWithData:line.shapes options:0 error:NULL];
+            for (NSArray* shape in shapes)
             {
-                coordinates[i++] = CLLocationCoordinate2DMake([point[0] floatValue], [point[1] floatValue]);
-            }
-            MKPolyline* polyLine = [MKPolyline polylineWithCoordinates:coordinates count:[shape count]];
-            objc_setAssociatedObject(polyLine, "lineId", line.lineId, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-            if ([line.lineId isEqualToString:self.selectedLine.lineId])
-            {
-                [self.mapView insertOverlay:polyLine atIndex:NSIntegerMax];
-            }
-            else
-            {
-                [self.mapView insertOverlay:polyLine atIndex:0];
+                NSUInteger i = 0;
+                CLLocationCoordinate2D coordinates[[shape count]];
+                for (NSArray* point in shape)
+                {
+                    coordinates[i++] = CLLocationCoordinate2DMake([point[0] floatValue], [point[1] floatValue]);
+                }
+                MKPolyline* polyline = [MKPolyline polylineWithCoordinates:coordinates count:[shape count]];
+                objc_setAssociatedObject(polyline, "lineId", line.lineId, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                [polylines addObject:polyline];
             }
         }
-        lineIndex++;
+        _polylines = [NSArray arrayWithArray:polylines];
+    }
+    return _polylines;
+}
+
+- (void)addLines
+{
+    for (MKPolyline* polyline in self.polylines)
+    {
+        NSString* lineId = objc_getAssociatedObject(polyline, "lineId");
+        if ([lineId isEqualToString:self.selectedLine.lineId])
+        {
+            [self.mapView insertOverlay:polyline atIndex:NSIntegerMax];
+        }
+        else
+        {
+            [self.mapView insertOverlay:polyline atIndex:0];
+        }
     }
 }
 

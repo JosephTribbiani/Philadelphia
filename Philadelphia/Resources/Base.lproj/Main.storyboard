@@ -13,11 +13,11 @@
                         <viewControllerLayoutGuide type="bottom" id="tYX-j8-H6e"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="703" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="6yD-3y-RTa">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                                <rect key="frame" x="0.0" y="0.0" width="703" height="768"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="VrC-Ug-t7t"/>
@@ -31,6 +31,7 @@
                             <constraint firstItem="6yD-3y-RTa" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="lay-Pt-KZc"/>
                             <constraint firstAttribute="trailing" secondItem="6yD-3y-RTa" secondAttribute="trailing" id="yf6-r5-HKz"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <navigationItem key="navigationItem" id="ezf-rY-w3P"/>
                     <connections>
@@ -54,7 +55,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WIN-TS-Swf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="722" y="81"/>
+            <point key="canvasLocation" x="966" y="109"/>
         </scene>
         <!--Master View Controller-->
         <scene sceneID="XT0-0S-PbZ">
@@ -65,7 +66,7 @@
                         <viewControllerLayoutGuide type="bottom" id="ZxL-E2-bLK"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Buw-UA-QFX">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="768"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0b3-58-wb6">
@@ -152,7 +153,7 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="84" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="asj-FR-ldC">
-                                <rect key="frame" x="0.0" y="415" width="320" height="369"/>
+                                <rect key="frame" x="0.0" y="415" width="320" height="285"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -250,6 +251,7 @@
                             <constraint firstItem="aMD-BM-naD" firstAttribute="leading" secondItem="Buw-UA-QFX" secondAttribute="leading" constant="93" id="tR3-4z-Ttl"/>
                             <constraint firstItem="0b3-58-wb6" firstAttribute="leading" secondItem="51a-c3-NoH" secondAttribute="trailing" constant="8" id="xTp-om-g6l"/>
                         </constraints>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="An4-tv-jaZ"/>
@@ -264,7 +266,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fYa-Ix-HcW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1190" y="87"/>
+            <point key="canvasLocation" x="1434" y="115"/>
         </scene>
         <!--Select Station Table View Controller-->
         <scene sceneID="XsP-Fn-Mhu">
@@ -274,6 +276,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="200" height="500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                         <inset key="separatorInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="84o-7O-HAy" style="IBUITableViewCellStyleDefault" id="4DN-yG-rXp">
@@ -303,13 +306,14 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="be2-ng-rWg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1685" y="263"/>
+            <point key="canvasLocation" x="1936" y="263"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="a2t-I8-Rz5">
             <objects>
                 <splitViewController id="Cfs-Fg-C0s" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <connections>
                         <segue destination="uKM-J5-9QM" kind="relationship" relationship="masterViewController" id="eBM-xj-fZC"/>
                         <segue destination="4EP-Jj-mTU" kind="relationship" relationship="detailViewController" id="brl-9S-Znm"/>
@@ -317,7 +321,7 @@
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OdZ-Qk-pWB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-270" y="625"/>
+            <point key="canvasLocation" x="-418" y="253"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="a7R-KH-NEQ">

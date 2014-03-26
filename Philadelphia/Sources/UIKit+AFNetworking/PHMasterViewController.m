@@ -11,12 +11,12 @@
 #import "PHAppDelegate.h"
 #import "PHLine.h"
 #import "PHSelectStationTableViewController.h"
-#import "PHStation.h"
+#import "PHStation+Utils.h"
 #import "PHTrain.h"
 #import "PHResultsTableViewCell.h"
 #import "PHDetailViewController.h"
 
-@interface PHMasterViewController () <UIPickerViewDelegate, UIPickerViewDataSource, PHSelectStationTableViewControllerDelegate, UITableViewDataSource>
+@interface PHMasterViewController () <UIPickerViewDelegate, UIPickerViewDataSource, PHSelectStationTableViewControllerDelegate, UITableViewDataSource, PHCoreDatamanagerDelegate>
 
 @property (strong, nonatomic) PHCoreDataManager* coreDataManager;
 
@@ -67,6 +67,7 @@
     if (_coreDataManager == nil)
     {
         _coreDataManager = ((PHAppDelegate*)[UIApplication sharedApplication].delegate).coreDataManger;
+        _coreDataManager.delegate = self;
     }
     return _coreDataManager;
 }
@@ -205,8 +206,8 @@
 {
     NSMutableArray* result = [NSMutableArray new];
     
-    NSSet* startStationTrains = startStation.trains;
-    NSSet* stopStationTrains = stopStation.trains;
+    NSSet* startStationTrains = [startStation passingTrains];
+    NSSet* stopStationTrains = [stopStation passingTrains];
     
     NSMutableSet* crossTrains = [startStationTrains mutableCopy];
     [crossTrains intersectSet:stopStationTrains];
@@ -219,7 +220,7 @@
             for (NSDictionary* schedule in schedules)
             {
                 NSString* days = schedule[@"days"];
-                NSRange dayRange = [days rangeOfString:[self currentDayOfWeek]];
+                NSRange dayRange = [days rangeOfString:[NSString stringWithFormat:@"%d",[self currentDayOfWeek]]];
                 if (dayRange.location != NSNotFound)
                 {
                     NSArray* startTimes = [schedule[@"schedule"] objectForKey:startStation.stopId];
@@ -267,11 +268,11 @@
     }
 }
 
-- (NSString*)currentDayOfWeek
+- (NSInteger)currentDayOfWeek
 {
     NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents* components = [calendar components:NSCalendarUnitWeekday fromDate:[NSDate date]];
-    return [NSString stringWithFormat:@"%d",[components weekday] - 1];
+    return [components weekday] - 1 ;
 }
 
 - (NSTimeInterval)currentTimeIntervalSinceMidnight
@@ -281,7 +282,6 @@
     NSDateComponents* components = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:currentDate];
     NSDate* midnightDate = [calendar dateFromComponents:components];
     return [currentDate timeIntervalSinceDate:midnightDate];
-//    return 0;
 }
 
 - (NSString *)stringFromTimeInterval:(NSTimeInterval)timeInterval
@@ -314,4 +314,13 @@
 {
     return self.resultsToShow == nil ? 0 : [self.resultsToShow count];
 }
+
+#pragma mark - PHCoreDataManagerDelegate
+
+- (void)trainMapDidLoad
+{
+    self.lines = nil;
+    [self.pickerView reloadAllComponents];
+}
+
 @end

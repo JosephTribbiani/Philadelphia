@@ -10,7 +10,8 @@
 
 @interface PHStation (Utils)
 
-+ (PHStation*)stationWithInfo:(NSDictionary*)info trains:(NSArray*)trains inManagedObjectContext:(NSManagedObjectContext*)context;
++ (PHStation*)stationWithInfo:(NSDictionary*)info inManagedObjectContext:(NSManagedObjectContext*)context;
 - (NSInteger)positionForLine:(PHLine*)line direction:(NSUInteger)direction;
+- (NSSet*)passingTrains;
 
 @end

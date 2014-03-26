@@ -15,14 +15,12 @@
         <attribute name="positions" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="stopId" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="lines" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PHLine" inverseName="stations" inverseEntity="PHLine" syncable="YES"/>
-        <relationship name="trains" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PHTrain" inverseName="stations" inverseEntity="PHTrain" syncable="YES"/>
     </entity>
     <entity name="PHTrain" representedClassName="PHTrain" syncable="YES">
         <attribute name="direction" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="schedule" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="signature" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="line" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PHLine" inverseName="trains" inverseEntity="PHLine" syncable="YES"/>
-        <relationship name="stations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PHStation" inverseName="trains" inverseEntity="PHStation" syncable="YES"/>
     </entity>
     <elements>
         <element name="PHLine" positionX="0" positionY="0" width="0" height="0"/>

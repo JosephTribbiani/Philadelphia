@@ -10,6 +10,7 @@
 #import "PHNetworkingManager.h"
 #import "PHLine+Create.h"
 #import "PHStation+Utils.h"
+#import "PHTrain+Create.h"
 
 @interface PHCoreDataManager()
 
@@ -27,7 +28,6 @@
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error])
         {
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
         }
     }
 }
@@ -100,23 +100,26 @@
 {
     [self.networkingManager requestTransportInfoWithCompletionHandler:^(NSDictionary *transportInfo)
     {
-        NSLog(@"Did recieve ransport info");
         for (NSDictionary* line in transportInfo[@"lines"])
         {
             [PHLine lineWithInfo:line inManagedObjectContext:self.managedObjectContext];
         }
-        NSLog(@"Lines created");
         
         for (NSDictionary* stop in transportInfo[@"stops"])
         {
-            [PHStation stationWithInfo:stop trains:transportInfo[@"trains"] inManagedObjectContext:self.managedObjectContext];
+            [PHStation stationWithInfo:stop inManagedObjectContext:self.managedObjectContext];
         }
-        NSLog(@"Stops created");
+        
+        for (NSDictionary* train in transportInfo[@"trains"])
+        {
+            [PHTrain trainWithInfo:train inManagedObjectContext:self.managedObjectContext];
+        }
+        
         if ([self.managedObjectContext hasChanges])
         {
             [self.managedObjectContext save:NULL];
         }
-        NSLog(@"Did create core data model");
+        [self.delegate trainMapDidLoad];
     }];
 }
 
