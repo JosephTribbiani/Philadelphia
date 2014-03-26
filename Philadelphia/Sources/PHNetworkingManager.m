@@ -9,8 +9,6 @@
 #import "PHNetworkingManager.h"
 #import "AFNetworking/AFNetworking.h"
 
-//NSString* const CVActivityViewWillStartIndicatingActivityNotification = @"CVActivityViewWillStartIndicatingActivityNotification";
-
 @interface PHNetworkingManager()
 
 @property (nonatomic, strong) AFJSONResponseSerializer* responseSerializer;

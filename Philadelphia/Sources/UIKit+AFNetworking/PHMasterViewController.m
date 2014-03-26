@@ -16,6 +16,8 @@
 #import "PHResultsTableViewCell.h"
 #import "PHDetailViewController.h"
 
+#define kForwardsDirection @"0"
+
 @interface PHMasterViewController () <UIPickerViewDelegate, UIPickerViewDataSource, PHSelectStationTableViewControllerDelegate, UITableViewDataSource, PHCoreDatamanagerDelegate>
 
 @property (strong, nonatomic) PHCoreDataManager* coreDataManager;
@@ -37,7 +39,7 @@
 
 @implementation PHMasterViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
@@ -253,10 +255,10 @@
 - (BOOL)directionForLine:(PHLine*)line startStation:(PHStation*)startStation stopStation:(PHStation*)stopStation
 {
     NSDictionary* startStationPositions = [[NSJSONSerialization JSONObjectWithData:startStation.positions options:0 error:NULL] objectForKey:line.lineId];
-    NSInteger startStationDirectPosition = [[startStationPositions objectForKey:@"0"] integerValue];
+    NSInteger startStationDirectPosition = [[startStationPositions objectForKey:kForwardsDirection] integerValue];
     
     NSDictionary* stopStationPositions = [[NSJSONSerialization JSONObjectWithData:stopStation.positions options:0 error:NULL] objectForKey:line.lineId];
-    NSInteger stopStationDirectPosition = [[stopStationPositions objectForKey:@"0"] integerValue];
+    NSInteger stopStationDirectPosition = [[stopStationPositions objectForKey:kForwardsDirection] integerValue];
     
     if (startStationDirectPosition < stopStationDirectPosition)
     {
@@ -284,7 +286,7 @@
     return [currentDate timeIntervalSinceDate:midnightDate];
 }
 
-- (NSString *)stringFromTimeInterval:(NSTimeInterval)timeInterval
+- (NSString*)stringFromTimeInterval:(NSTimeInterval)timeInterval
 {
     NSInteger integerTimeInterval = (NSInteger)timeInterval;
     NSInteger seconds = integerTimeInterval % 60;
@@ -300,7 +302,7 @@
     return 1;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
     PHResultsTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"ResultCellIdentifier"];
     NSDictionary* train = [self.resultsToShow objectAtIndex:indexPath.row];

@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-//extern NSString* const kPHLines;
-
 @interface PHNetworkingManager : NSObject
 
 - (void)requestTransportInfoWithCompletionHandler:(void(^)(NSDictionary* transportInfo))completionHandler;
