@@ -53,20 +53,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.pickerView reloadAllComponents];
     [self.startStationButton setTitle:NSLocalizedString(@"stationPlaceholder", @"") forState:UIControlStateNormal];
     [self.stopStationButton setTitle:NSLocalizedString(@"stationPlaceholder", @"") forState:UIControlStateNormal];
-    
-	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-- (PHCoreDataManager *)coreDataManager
+- (PHCoreDataManager*)coreDataManager
 {
     if (_coreDataManager == nil)
     {
@@ -285,6 +281,7 @@
     NSDateComponents* components = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit) fromDate:currentDate];
     NSDate* midnightDate = [calendar dateFromComponents:components];
     return [currentDate timeIntervalSinceDate:midnightDate];
+//    return 0;
 }
 
 - (NSString *)stringFromTimeInterval:(NSTimeInterval)timeInterval

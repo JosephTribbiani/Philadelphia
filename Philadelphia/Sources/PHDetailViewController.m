@@ -27,9 +27,8 @@
 @interface PHDetailViewController () <MKMapViewDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView* mapView;
-@property (nonatomic, strong) PHCoreDataManager* coreDataManager;
-//@property (nonatomic, strong) NSMutableDictionary* lines;
 
+@property (nonatomic, strong) PHCoreDataManager* coreDataManager;
 @property (strong, nonatomic) PHLine* selectedLine;
 
 @end
@@ -41,17 +40,12 @@
     [super viewDidLoad];
     self.mapView.translatesAutoresizingMaskIntoConstraints = NO;
     self.coreDataManager = ((PHAppDelegate*)[UIApplication sharedApplication].delegate).coreDataManger;
-    
-//    [self addLines];
-    
     [self.mapView setRegion:MKCoordinateRegionMake(CLLocationCoordinate2DMake(39.95, -75.166667), MKCoordinateSpanMake(1, 1)) animated:YES];
-//    self.lines = [NSMutableDictionary new];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)addAnnotations
