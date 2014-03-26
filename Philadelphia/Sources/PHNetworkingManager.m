@@ -77,7 +77,6 @@
                 }
                 
                 // calculate crosses
-                ////////////////////////////////////////////////////////////////////////////////////////////////
                 NSMutableSet* crossedLines = [NSMutableSet setWithArray:lineIds]; //remove duplicates from array
                 
                 if ([crossedLines count] > 1) // not only itself
@@ -94,7 +93,7 @@
                         }
                     }
                 }
-                ////////////////////////////////////////////////////////////////////////////////////////////////
+                
                 NSMutableDictionary* mutableStop = [NSMutableDictionary dictionaryWithDictionary:@{@"stopId" : [NSString stringWithFormat:@"%@", stop[@"stopId"]] ,
                                                                                                    @"name" : stop[@"name"],
                                                                                                    @"latitude" : stop[@"lat"],
@@ -159,7 +158,7 @@
 
             completionHandler(@{@"lines" : [NSArray arrayWithArray:linesMutable],
                                 @"stops" : [NSArray arrayWithArray:stopsMutable],
-                                @"trains" : trains});
+                                @"trains" : [NSArray arrayWithArray:trains]});
         }
     }
     failure:^(AFHTTPRequestOperation* operation, NSError* error)
