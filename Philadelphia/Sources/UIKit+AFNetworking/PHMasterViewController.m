@@ -6,15 +6,11 @@
 //  Copyright (c) 2014 Igor Bogatchuk. All rights reserved.
 //
 
-#import "PHMasterViewController.h"
 #import "PHCoreDataManager.h"
 #import "PHAppDelegate.h"
 #import "PHLine.h"
-#import "PHSelectStationTableViewController.h"
 #import "PHStation+Utils.h"
 #import "PHTrain.h"
-#import "PHResultsTableViewCell.h"
-#import "PHDetailViewController.h"
 
 #define kForwardsDirection @"0"
 

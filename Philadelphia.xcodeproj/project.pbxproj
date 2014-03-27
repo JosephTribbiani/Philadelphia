@@ -365,13 +365,13 @@
 				D8403E7918D87E2D00B99DF8 /* PHStation+Utils.m */,
 				D815143218DB561C0052FCC7 /* PHTrain+Create.h */,
 				D815143318DB561C0052FCC7 /* PHTrain+Create.m */,
-				D8F63BCB18D1FF8100BED55E /* DataModel.xcdatamodeld */,
 				D80D628718E2DB7E00BC9676 /* PHTrain.h */,
 				D80D628818E2DB7E00BC9676 /* PHTrain.m */,
 				D80D628A18E2DB7F00BC9676 /* PHLine.h */,
 				D80D628B18E2DB7F00BC9676 /* PHLine.m */,
 				D80D628D18E2DB7F00BC9676 /* PHStation.h */,
 				D80D628E18E2DB7F00BC9676 /* PHStation.m */,
+				D8F63BCB18D1FF8100BED55E /* DataModel.xcdatamodeld */,
 			);
 			name = Model;
 			sourceTree = "<group>";
