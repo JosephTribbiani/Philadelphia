@@ -11,7 +11,6 @@
 		D80D628C18E2DB7F00BC9676 /* PHLine.m in Sources */ = {isa = PBXBuildFile; fileRef = D80D628B18E2DB7F00BC9676 /* PHLine.m */; };
 		D80D628F18E2DB7F00BC9676 /* PHStation.m in Sources */ = {isa = PBXBuildFile; fileRef = D80D628E18E2DB7F00BC9676 /* PHStation.m */; };
 		D815143418DB561C0052FCC7 /* PHTrain+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = D815143318DB561C0052FCC7 /* PHTrain+Create.m */; };
-		D828766718E060AF00E08697 /* PHMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D828766618E060AF00E08697 /* PHMasterViewController.m */; };
 		D829E54118E1783800486DD6 /* PHSelectStationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D829E54018E1783800486DD6 /* PHSelectStationTableViewController.m */; };
 		D829E54318E18BE100486DD6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D829E54218E18BE100486DD6 /* Localizable.strings */; };
 		D829E54618E1AF1000486DD6 /* PHResultsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D829E54518E1AF1000486DD6 /* PHResultsTableViewCell.m */; };
@@ -39,6 +38,7 @@
 		D8403E7A18D87E2D00B99DF8 /* PHStation+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = D8403E7918D87E2D00B99DF8 /* PHStation+Utils.m */; };
 		D8403E7D18D889E800B99DF8 /* PHAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = D8403E7C18D889E800B99DF8 /* PHAnnotation.m */; };
 		D86CD30818D7658E006A2390 /* PHLine+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = D86CD30718D7658E006A2390 /* PHLine+Create.m */; };
+		D8BEE56918E586680006EA5D /* PHMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8BEE56818E586680006EA5D /* PHMasterViewController.m */; };
 		D8E3FF4C18D1FD1D0031089F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8E3FF4B18D1FD1D0031089F /* Foundation.framework */; };
 		D8E3FF4E18D1FD1D0031089F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8E3FF4D18D1FD1D0031089F /* CoreGraphics.framework */; };
 		D8E3FF5018D1FD1D0031089F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8E3FF4F18D1FD1D0031089F /* UIKit.framework */; };
@@ -75,8 +75,6 @@
 		D80D628E18E2DB7F00BC9676 /* PHStation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHStation.m; path = Sources/PHStation.m; sourceTree = "<group>"; };
 		D815143218DB561C0052FCC7 /* PHTrain+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PHTrain+Create.h"; path = "Sources/PHTrain+Create.h"; sourceTree = "<group>"; };
 		D815143318DB561C0052FCC7 /* PHTrain+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "PHTrain+Create.m"; path = "Sources/PHTrain+Create.m"; sourceTree = "<group>"; };
-		D828766518E060AF00E08697 /* PHMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHMasterViewController.h; path = "Sources/UIKit+AFNetworking/PHMasterViewController.h"; sourceTree = "<group>"; };
-		D828766618E060AF00E08697 /* PHMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHMasterViewController.m; path = "Sources/UIKit+AFNetworking/PHMasterViewController.m"; sourceTree = "<group>"; };
 		D829E53F18E1783800486DD6 /* PHSelectStationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHSelectStationTableViewController.h; path = Sources/PHSelectStationTableViewController.h; sourceTree = "<group>"; };
 		D829E54018E1783800486DD6 /* PHSelectStationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHSelectStationTableViewController.m; path = Sources/PHSelectStationTableViewController.m; sourceTree = "<group>"; };
 		D829E54218E18BE100486DD6 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = Resources/Localizable.strings; sourceTree = "<group>"; };
@@ -130,6 +128,8 @@
 		D8403E7C18D889E800B99DF8 /* PHAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHAnnotation.m; path = Sources/PHAnnotation.m; sourceTree = "<group>"; };
 		D86CD30618D7658E006A2390 /* PHLine+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PHLine+Create.h"; path = "Sources/PHLine+Create.h"; sourceTree = "<group>"; };
 		D86CD30718D7658E006A2390 /* PHLine+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "PHLine+Create.m"; path = "Sources/PHLine+Create.m"; sourceTree = "<group>"; };
+		D8BEE56718E586680006EA5D /* PHMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHMasterViewController.h; path = Sources/PHMasterViewController.h; sourceTree = "<group>"; };
+		D8BEE56818E586680006EA5D /* PHMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHMasterViewController.m; path = Sources/PHMasterViewController.m; sourceTree = "<group>"; };
 		D8E3FF4818D1FD1D0031089F /* Philadelphia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Philadelphia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8E3FF4B18D1FD1D0031089F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D8E3FF4D18D1FD1D0031089F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -379,10 +379,10 @@
 		D8F63BE418D20D1600BED55E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				D8BEE56718E586680006EA5D /* PHMasterViewController.h */,
+				D8BEE56818E586680006EA5D /* PHMasterViewController.m */,
 				D8E3FF6018D1FD1D0031089F /* PHDetailViewController.h */,
 				D8E3FF6118D1FD1D0031089F /* PHDetailViewController.m */,
-				D828766518E060AF00E08697 /* PHMasterViewController.h */,
-				D828766618E060AF00E08697 /* PHMasterViewController.m */,
 				D829E53F18E1783800486DD6 /* PHSelectStationTableViewController.h */,
 				D829E54018E1783800486DD6 /* PHSelectStationTableViewController.m */,
 			);
@@ -497,6 +497,7 @@
 				D82BA9EE18D3188000CB568C /* AFHTTPRequestOperation.m in Sources */,
 				D82BA9F618D3188000CB568C /* AFURLSessionManager.m in Sources */,
 				D82BA9F718D3188000CB568C /* AFNetworkActivityIndicatorManager.m in Sources */,
+				D8BEE56918E586680006EA5D /* PHMasterViewController.m in Sources */,
 				D82BA9F318D3188000CB568C /* AFURLConnectionOperation.m in Sources */,
 				D82BA9EF18D3188000CB568C /* AFHTTPRequestOperationManager.m in Sources */,
 				D8403E7A18D87E2D00B99DF8 /* PHStation+Utils.m in Sources */,
@@ -515,7 +516,6 @@
 				D82BA9F818D3188000CB568C /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				D82BA9FD18D3188000CB568C /* UIRefreshControl+AFNetworking.m in Sources */,
 				D829E54618E1AF1000486DD6 /* PHResultsTableViewCell.m in Sources */,
-				D828766718E060AF00E08697 /* PHMasterViewController.m in Sources */,
 				D80D628918E2DB7E00BC9676 /* PHTrain.m in Sources */,
 				D82BA9FC18D3188000CB568C /* UIProgressView+AFNetworking.m in Sources */,
 				D8E3FF5818D1FD1D0031089F /* main.m in Sources */,

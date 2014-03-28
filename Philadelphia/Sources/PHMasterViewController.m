@@ -11,10 +11,14 @@
 #import "PHLine.h"
 #import "PHStation+Utils.h"
 #import "PHTrain.h"
+#import "PHSelectStationTableViewController.h"
+#import "PHMasterViewController.h"
+#import "PHDetailViewController.h"
+#import "PHResultsTableViewCell.h"
 
 #define kForwardsDirection @"0"
 
-@interface PHMasterViewController () <UIPickerViewDelegate, UIPickerViewDataSource, PHSelectStationTableViewControllerDelegate, UITableViewDataSource, PHCoreDatamanagerDelegate>
+@interface PHMasterViewController() <UIPickerViewDelegate, UIPickerViewDataSource, PHSelectStationTableViewControllerDelegate, UITableViewDataSource, PHCoreDatamanagerDelegate>
 
 @property (strong, nonatomic) PHCoreDataManager* coreDataManager;
 
